@@ -48,6 +48,22 @@ if ! brew list --cask font-jetbrains-mono-nerd-font &>/dev/null; then
     brew install --cask font-jetbrains-mono-nerd-font
 fi
 
+# ── Catppuccin for bat ─────────────────────────────────────────
+info "setting up bat theme..."
+BAT_THEMES="$(bat --config-dir)/themes"
+mkdir -p "$BAT_THEMES"
+if [ ! -f "$BAT_THEMES/Catppuccin Mocha.tmTheme" ]; then
+    curl -fsSL -o "$BAT_THEMES/Catppuccin Mocha.tmTheme" \
+        "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
+    bat cache --build
+    ok "bat catppuccin theme installed"
+fi
+
+# ── Catppuccin for zsh-syntax-highlighting ────────────────────
+info "setting up zsh-syntax-highlighting theme..."
+mkdir -p "$HOME/.zsh"
+link "$DOTFILES/zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh" "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
+
 # ── Symlinks ─────────────────────────────────────────────────────
 info "linking configs..."
 

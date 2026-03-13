@@ -14,6 +14,7 @@ source $ZSH/oh-my-zsh.sh
 
 # ── External Plugins ─────────────────────────────────────────────
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh 2>/dev/null
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 if type brew &>/dev/null; then
@@ -83,6 +84,7 @@ alias c="clear"
 export EDITOR="code --wait"
 export VISUAL="code --wait"
 export LANG=en_US.UTF-8
+export BAT_THEME="Catppuccin Mocha"
 
 # ── NVM ──────────────────────────────────────────────────────────
 export NVM_DIR="$HOME/.nvm"
