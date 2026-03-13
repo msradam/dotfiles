@@ -1,0 +1,34 @@
+[user]
+	name = Adam Munawar Rahman
+	email = msrahmanadam@gmail.com
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[core]
+	editor = code --wait
+	pager = bat --style=plain
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[diff]
+	colorMoved = default
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	lg = log --oneline --graph --decorate -20
+	last = log -1 HEAD
+	unstage = reset HEAD --
