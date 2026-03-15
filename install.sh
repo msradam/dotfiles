@@ -77,9 +77,9 @@ link "$DOTFILES/vscode/settings.json"    "$HOME/Library/Application Support/Code
 
 # ── VS Code / IBM Bob extensions + Bob settings ──────────────────
 # IBM Bob (IBM watsonx Code Assistant) is a VS Code fork using the VS Code marketplace.
-# Its CLI is `bob`; settings live at ~/Library/Application Support/Bob/User/.
+# Its CLI is `bob`; settings live at ~/Library/Application Support/IBM Bob/User/.
 # Adjust BOB_SETTINGS_DIR below if your Bob install path differs.
-BOB_SETTINGS_DIR="$HOME/Library/Application Support/Bob/User"
+BOB_SETTINGS_DIR="$HOME/Library/Application Support/IBM Bob/User"
 
 vscode_install_extensions() {
     local cli="$1" label="$2"
