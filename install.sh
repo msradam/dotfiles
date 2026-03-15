@@ -75,6 +75,52 @@ link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
 link "$DOTFILES/vscode/settings.json"    "$HOME/Library/Application Support/Code/User/settings.json"
 
+# ── VS Code / IBM Bob extensions + Bob settings ──────────────────
+# IBM Bob (IBM watsonx Code Assistant) is a VS Code fork using the VS Code marketplace.
+# Its CLI is `bob`; settings live at ~/Library/Application Support/Bob/User/.
+# Adjust BOB_SETTINGS_DIR below if your Bob install path differs.
+BOB_SETTINGS_DIR="$HOME/Library/Application Support/Bob/User"
+
+vscode_install_extensions() {
+    local cli="$1" label="$2"
+    info "installing extensions for $label..."
+    local failed=0
+    while IFS= read -r line; do
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue   # skip comments
+        [[ -z "${line// }" ]] && continue              # skip blanks
+        local ext="${line%%#*}"                        # strip inline comment
+        ext="${ext// /}"
+        [[ -z "$ext" ]] && continue
+        if "$cli" --install-extension "$ext" --force &>/dev/null; then
+            ok "  $ext"
+        else
+            warn "  $ext (failed — skipped)"
+            (( failed++ )) || true
+        fi
+    done < "$DOTFILES/vscode/extensions.txt"
+    [ "$failed" -gt 0 ] && warn "$label: $failed extension(s) failed to install"
+}
+
+if command -v code &>/dev/null; then
+    info "VS Code detected"
+    vscode_install_extensions code "VS Code"
+else
+    warn "VS Code CLI (code) not found — skipping VS Code extensions"
+fi
+
+if command -v bob &>/dev/null; then
+    info "IBM Bob detected"
+    mkdir -p "$BOB_SETTINGS_DIR"
+    link "$DOTFILES/vscode/settings.json" "$BOB_SETTINGS_DIR/settings.json"
+    vscode_install_extensions bob "IBM Bob"
+elif [ -d "$BOB_SETTINGS_DIR" ]; then
+    # Bob installed but CLI not in PATH — link settings only
+    info "IBM Bob settings dir found (CLI not in PATH) — linking settings only"
+    link "$DOTFILES/vscode/settings.json" "$BOB_SETTINGS_DIR/settings.json"
+else
+    warn "IBM Bob not found — skipping"
+fi
+
 # ── Start services ───────────────────────────────────────────────
 info "starting services..."
 yabai --restart-service 2>/dev/null || true

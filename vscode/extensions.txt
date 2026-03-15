@@ -1,0 +1,80 @@
+# VS Code extensions — installed via: code --install-extension / bob --install-extension
+# Both VS Code and IBM Bob use the VS Code marketplace.
+
+# ── Theme ────────────────────────────────────────────────────────────────────
+catppuccin.catppuccin-vsc
+catppuccin.catppuccin-vsc-icons
+
+# ── Core UX ──────────────────────────────────────────────────────────────────
+usernamehw.errorlens              # inline errors/warnings on the offending line
+gruntfuggly.todo-tree             # TODO/FIXME/HACK tree in sidebar
+aaron-bond.better-comments        # colour-coded comment annotations
+streetsidesoftware.code-spell-checker
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+eamodio.gitlens                   # blame, history, PR integration, AI commit messages
+mhutchie.git-graph                # visual branch/commit graph
+
+# ── Python / Data Science ─────────────────────────────────────────────────────
+ms-python.python
+ms-python.vscode-pylance
+ms-python.debugpy
+ms-python.vscode-python-envs
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
+ms-toolsai.datawrangler           # AI-powered dataframe viewer + pandas codegen
+
+# ── Go ───────────────────────────────────────────────────────────────────────
+golang.go
+
+# ── Web / Formatting ─────────────────────────────────────────────────────────
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+formulahendry.auto-rename-tag
+christian-kohler.path-intellisense
+
+# ── API / Testing ─────────────────────────────────────────────────────────────
+humao.rest-client                 # HTTP requests as .http files, no extra app needed
+
+# ── DevOps / Infra ────────────────────────────────────────────────────────────
+redhat.vscode-yaml
+redhat.ansible
+ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
+
+# ── Remote Development ────────────────────────────────────────────────────────
+jeanp413.open-remote-ssh
+ms-vscode-remote.remote-containers
+ms-vsliveshare.vsliveshare
+
+# ── Data / Docs ───────────────────────────────────────────────────────────────
+grapecity.gc-excelviewer
+mathematic.vscode-pdf
+marp-team.marp-vscode
+yzhang.markdown-all-in-one
+DavidAnson.vscode-markdownlint
+
+# ── Code Quality ──────────────────────────────────────────────────────────────
+SonarSource.sonarlint-vscode      # security + bug detection (JS/TS/Py/Go/Java)
+
+# ── AI ───────────────────────────────────────────────────────────────────────
+anthropic.claude-code
+
+# ── Embedded / Hardware ───────────────────────────────────────────────────────
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cmake-tools
+ms-vscode.makefile-tools
+stmicroelectronics.stm32-vscode-extension
+stmicroelectronics.stm32cube-ide-bundles-manager
+platformio.platformio-ide
+marus25.cortex-debug
+mcu-debug.debug-tracker-vscode
+mcu-debug.memory-view
+mcu-debug.peripheral-viewer
+mcu-debug.rtos-views
+eclipse-cdt.memory-inspector
+eclipse-cdt.serial-monitor

@@ -2,7 +2,7 @@
     // ── Theme ───────────────────────────────────────────────────────
     "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
-    "workbench.preferredLightColorTheme": "Catppuccin Frappé",
+    "workbench.preferredLightColorTheme": "Catppuccin Latte",
     "window.autoDetectColorScheme": true,
     "workbench.iconTheme": "catppuccin-mocha",
     "catppuccin.accentColor": "lavender",
@@ -38,6 +38,7 @@
     "editor.stickyScroll.enabled": true,
     "editor.inlayHints.enabled": "onUnlessPressed",
     "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     // ── Files ───────────────────────────────────────────────────────
     "files.autoSave": "onFocusChange",
     "files.trimTrailingWhitespace": true,
@@ -60,6 +61,31 @@
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
     "diffEditor.ignoreTrimWhitespace": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.currentLine.enabled": true,
+    // ── Error Lens ──────────────────────────────────────────────────
+    "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+    "errorLens.followCursor": "activeLine",
+    // ── Todo Tree ───────────────────────────────────────────────────
+    "todo-tree.general.tags": ["TODO", "FIXME", "HACK", "NOTE", "BUG"],
+    "todo-tree.highlights.defaultHighlight": {
+        "foreground": "#cdd6f4",
+        "type": "tag"
+    },
+    // ── Prettier ────────────────────────────────────────────────────
+    "prettier.singleQuote": true,
+    "prettier.semi": false,
+    "prettier.trailingComma": "es5",
+    "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[python]": { "editor.defaultFormatter": "ms-python.black-formatter" },
+    "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
+    // ── Python ──────────────────────────────────────────────────────
+    "python.analysis.typeCheckingMode": "basic",
+    "python.terminal.activateEnvironment": true,
     // ── Notebook ────────────────────────────────────────────────────
     "notebook.lineNumbers": "on",
     // ── Copilot ─────────────────────────────────────────────────────
@@ -67,6 +93,7 @@
     // ── Claude Code ─────────────────────────────────────────────────
     "claudeCode.preferredLocation": "panel",
     "claudeCode.selectedModel": "claude-opus-4-6",
+    "claudeCode.allowDangerouslySkipPermissions": true,
     // ── Security ────────────────────────────────────────────────────
     "security.workspace.trust.untrustedFiles": "open",
     // ── Marp ────────────────────────────────────────────────────────
@@ -81,6 +108,5 @@
         "PATH": "/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-core-1.2.0-darwin-arm64/resources/binaries/darwin/aarch64:/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-build-cmake-1.44.0-darwin-arm64/resources/cube-cmake/darwin/aarch64:${env.PATH}"
     },
     "C_Cpp.intelliSenseEngine": "disabled",
-    "debug.allowBreakpointsEverywhere": true,
-    "claudeCode.allowDangerouslySkipPermissions": true
+    "debug.allowBreakpointsEverywhere": true
 }
