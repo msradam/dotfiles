@@ -57,9 +57,15 @@
   "explorer.confirmDelete": false,
   "explorer.sortOrder": "type",
   "explorer.autoReveal": true,
-  // Hide sidebar views that block file explorer
-  "outline.visible": false,
-  "timeline.visible": false,
+  // Hide sidebar extension views that block file explorer
+  "gitlens.views.commitDetails.enabled": false,
+  "gitlens.views.lineHistory.enabled": false,
+  "gitlens.views.fileHistory.enabled": false,
+  "gitlens.views.timeline.enabled": false,
+  "gitlens.views.searchAndCompare.enabled": false,
+  "docker.containers.groupBy": "None",
+  "docker.containers.sortBy": "CreatedTime",
+  "python.analysis.autoImportCompletions": false,
   // ── Git ─────────────────────────────────────────────────────────
   "git.autofetch": true,
   "git.confirmSync": false,
