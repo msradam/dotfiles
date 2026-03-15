@@ -57,11 +57,9 @@
   "explorer.confirmDelete": false,
   "explorer.sortOrder": "type",
   "explorer.autoReveal": true,
-  // Hide extra sidebar views to prevent blocking file browser
-  "outline.showVariables": false,
-  "timeline.excludeSources": ["timeline.localHistory"],
-  "scm.defaultViewMode": "tree",
-  "workbench.view.alwaysShowHeaderActions": false,
+  // Hide sidebar views that block file explorer
+  "outline.visible": false,
+  "timeline.visible": false,
   // ── Git ─────────────────────────────────────────────────────────
   "git.autofetch": true,
   "git.confirmSync": false,
