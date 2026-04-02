@@ -121,6 +121,44 @@ else
     warn "IBM Bob not found — skipping"
 fi
 
+# ── Firefox userChrome ───────────────────────────────────────────
+info "setting up Firefox userChrome..."
+FIREFOX_DIR="$HOME/Library/Application Support/Firefox"
+PROFILES_INI="$FIREFOX_DIR/profiles.ini"
+
+if [ ! -f "$PROFILES_INI" ]; then
+    warn "Firefox profiles.ini not found — skipping"
+else
+    _install_ff_profile() {
+        local path="$1" is_rel="$2"
+        [[ -z "$path" ]] && return
+        local full_path
+        [[ "$is_rel" == "1" ]] && full_path="$FIREFOX_DIR/$path" || full_path="$path"
+        [[ ! -d "$full_path" ]] && return
+        mkdir -p "$full_path/chrome"
+        link "$DOTFILES/firefox/userChrome.css" "$full_path/chrome/userChrome.css"
+        local user_js="$full_path/user.js"
+        local pref='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
+        if grep -q "legacyUserProfileCustomizations" "$user_js" 2>/dev/null; then
+            sed -i '' "s|.*legacyUserProfileCustomizations.*|$pref|" "$user_js"
+        else
+            echo "$pref" >> "$user_js"
+        fi
+        ok "Firefox: $(basename "$full_path")"
+    }
+
+    is_relative="" profile_path=""
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^\[.*\]$ ]]; then
+            _install_ff_profile "$profile_path" "$is_relative"
+            is_relative="" profile_path=""
+        elif [[ "$line" =~ ^IsRelative=(.+)$ ]]; then is_relative="${BASH_REMATCH[1]}"
+        elif [[ "$line" =~ ^Path=(.+)$ ]];       then profile_path="${BASH_REMATCH[1]}"
+        fi
+    done < "$PROFILES_INI"
+    _install_ff_profile "$profile_path" "$is_relative"  # flush last section
+fi
+
 # ── Start services ───────────────────────────────────────────────
 info "starting services..."
 yabai --restart-service 2>/dev/null || true
