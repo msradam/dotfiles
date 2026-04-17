@@ -4,7 +4,7 @@
   "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
   "workbench.preferredLightColorTheme": "Catppuccin Latte",
   "window.autoDetectColorScheme": true,
-  "workbench.iconTheme": "catppuccin-latte",
+  "workbench.iconTheme": "catppuccin-mocha",
   "catppuccin.accentColor": "lavender",
   // ── Minimal Chrome ──────────────────────────────────────────────
   "window.titleBarStyle": "custom",
@@ -116,7 +116,7 @@
   "markdown.marp.html": true,
   // ── STM32/Embedded ──────────────────────────────────────────────
   "cmake.environment": {
-    "PATH": "/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-core-1.2.0-darwin-arm64/resources/binaries/darwin/aarch64:/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-build-cmake-1.44.0-darwin-arm64/resources/cube-cmake/darwin/aarch64:${env.PATH}",
+    "PATH": "/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-core-1.2.1-darwin-arm64/resources/binaries/darwin/aarch64:/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-build-cmake-1.44.0-darwin-arm64/resources/cube-cmake/darwin/aarch64:${env.PATH}"
   },
   "C_Cpp.intelliSenseEngine": "disabled",
   "debug.allowBreakpointsEverywhere": true,
