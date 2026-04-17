@@ -35,7 +35,7 @@ echo ""
 
 # ── Homebrew dependencies ────────────────────────────────────────
 info "checking brew dependencies..."
-DEPS=(starship fzf zoxide eza bat zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
+DEPS=(starship fzf zoxide eza bat zsh-autosuggestions zsh-syntax-highlighting zsh-completions fnm)
 for dep in "${DEPS[@]}"; do
     if ! brew list "$dep" &>/dev/null; then
         info "installing $dep..."
@@ -82,6 +82,8 @@ link "$DOTFILES/zsh/.zshrc"              "$HOME/.zshrc"
 link "$DOTFILES/zsh/.zprofile"           "$HOME/.zprofile"
 link "$DOTFILES/starship/starship.toml"  "$HOME/.config/starship.toml"
 link "$DOTFILES/kitty/kitty.conf"        "$HOME/.config/kitty/kitty.conf"
+link "$DOTFILES/kitty/keybindings.conf"  "$HOME/.config/kitty/keybindings.conf"
+link "$DOTFILES/kitty/shortcuts.sh"      "$HOME/.config/kitty/shortcuts.sh"
 link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
 link "$DOTFILES/vscode/settings.json"    "$HOME/Library/Application Support/Code/User/settings.json"

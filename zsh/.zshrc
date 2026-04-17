@@ -14,8 +14,8 @@ source $ZSH/oh-my-zsh.sh
 
 # ── External Plugins ─────────────────────────────────────────────
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
-source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh 2>/dev/null
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh 2>/dev/null
 
 if type brew &>/dev/null; then
     FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
@@ -80,17 +80,35 @@ alias dots="cd ~/dotfiles"
 alias py="python3"
 alias c="clear"
 
+# ── Functions ─────────────────────────────────────────────────────────
+# Create directory and cd into it
+mk() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Clone repo and cd into it
+gclone() {
+    local repo="$1"
+    local dir="${repo##*/}"
+    dir="${dir%.git}"
+    git clone "$repo" "$dir" && cd "$dir"
+}
+
+# Stash with auto-message (date + optional note)
+gstash() {
+    local msg="stash-$(date +%Y%m%d-%H%M%S)"
+    [ -n "$1" ] && msg="$msg-$1"
+    git stash push -m "$msg"
+}
+
 # ── Environment ──────────────────────────────────────────────────
-export EDITOR="code --wait"
-export VISUAL="code --wait"
+export EDITOR="vim"
+export VISUAL="vim"
 export LANG=en_US.UTF-8
 export BAT_THEME="Catppuccin Mocha"
 
-# ── NVM ──────────────────────────────────────────────────────────
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# ── fnm (Fast Node Manager) ────────────────────────────────────────
+eval "$(fnm env --use-on-cd 2>/dev/null)" || true
 
 # ── PATH ─────────────────────────────────────────────────────────
-export PATH="$HOME/.platformio/penv/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.platformio/penv/bin:$HOME/.local/bin:$PATH"

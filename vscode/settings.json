@@ -103,7 +103,7 @@
   "ibm-bob-config": {
     "commandSecurityMode": "off",
     "codeCompletionMode": "nextEdit",
-    "logLevel": "warn"
+    "logLevel": "warn",
   },
 
   "security.workspace.trust.untrustedFiles": "open",
@@ -116,7 +116,7 @@
   "markdown.marp.html": true,
   // ── STM32/Embedded ──────────────────────────────────────────────
   "cmake.environment": {
-    "PATH": "/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-core-1.2.1-darwin-arm64/resources/binaries/darwin/aarch64:/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-build-cmake-1.44.0-darwin-arm64/resources/cube-cmake/darwin/aarch64:${env.PATH}"
+    "PATH": "/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-core-1.2.1-darwin-arm64/resources/binaries/darwin/aarch64:/Users/amsrahman/.vscode/extensions/stmicroelectronics.stm32cube-ide-build-cmake-1.44.0-darwin-arm64/resources/cube-cmake/darwin/aarch64:${env.PATH}",
   },
   "C_Cpp.intelliSenseEngine": "disabled",
   "debug.allowBreakpointsEverywhere": true,
