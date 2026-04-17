@@ -43,9 +43,20 @@ for dep in "${DEPS[@]}"; do
     fi
 done
 
-if ! brew list --cask font-jetbrains-mono-nerd-font &>/dev/null; then
-    info "installing JetBrains Mono Nerd Font..."
-    brew install --cask font-jetbrains-mono-nerd-font
+# ── Fonts ─────────────────────────────────────────────────────────
+info "installing fonts..."
+FONT_SRC="$DOTFILES/fonts"
+FONT_DST="$HOME/Library/Fonts"
+mkdir -p "$FONT_DST"
+if [ -d "$FONT_SRC" ]; then
+    for font in "$FONT_SRC"/*.ttf; do
+        if [ -f "$font" ]; then
+            cp "$font" "$FONT_DST/"
+        fi
+    done
+    ok "fonts installed"
+else
+    warn "fonts directory not found"
 fi
 
 # ── Catppuccin for bat ─────────────────────────────────────────
