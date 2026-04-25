@@ -16,6 +16,12 @@
   "editor.renderLineHighlight": "gutter",
   "breadcrumbs.enabled": true,
   // ── Font ────────────────────────────────────────────────────────
+  // Primary: JetBrains Mono (free, 142 ligatures, ergonomic, 8 weights)
+  // Alternatives (uncomment to switch):
+  //   "editor.fontFamily": "'Cascadia Mono', monospace",
+  //   "editor.fontFamily": "'Fira Code Nerd Font Mono', monospace",
+  //   "editor.fontFamily": "'Geist Mono Nerd Font', monospace",
+  // Premium options: MonoLisa (eye strain reduction), Berkeley Mono (design), Operator Mono (italics)
   "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 14,
   "editor.lineHeight": 1.6,

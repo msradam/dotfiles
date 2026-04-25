@@ -45,16 +45,38 @@ done
 
 # ── Fonts ─────────────────────────────────────────────────────────
 info "installing fonts..."
+
+# Install fonts via Homebrew (recommended: auto-updated)
+FONT_CASKS=(
+    "font-jetbrains-mono-nerd-font"
+    "font-cascadia-mono"
+    "font-fira-code-nerd-font"
+    "font-geist-mono-nerd-font"
+    "font-gohufont-nerd-font"
+    "font-iosevka-nerd-font"
+)
+for cask in "${FONT_CASKS[@]}"; do
+    if ! brew list --cask "$cask" &>/dev/null 2>&1; then
+        info "  installing $cask..."
+        brew install --cask "$cask" 2>/dev/null || warn "  $cask (failed)"
+    fi
+done
+ok "Homebrew fonts installed"
+
+# Also copy any .ttf files from dotfiles/fonts directory (local overrides)
 FONT_SRC="$DOTFILES/fonts"
 FONT_DST="$HOME/Library/Fonts"
 mkdir -p "$FONT_DST"
 if [ -d "$FONT_SRC" ]; then
+    count=0
     for font in "$FONT_SRC"/*.ttf; do
         if [ -f "$font" ]; then
-            cp "$font" "$FONT_DST/"
+            cp "$font" "$FONT_DST/" && (( count++ )) || true
         fi
     done
-    ok "fonts installed"
+    if [ "$count" -gt 0 ]; then
+        ok "copied $count local fonts"
+    fi
 else
     warn "fonts directory not found"
 fi
