@@ -33,35 +33,16 @@ echo "  ║       dotfiles install script        ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
 
-# ── Homebrew dependencies ────────────────────────────────────────
-info "checking brew dependencies..."
-DEPS=(starship fzf zoxide eza bat zsh-autosuggestions zsh-syntax-highlighting zsh-completions fnm)
-for dep in "${DEPS[@]}"; do
-    if ! brew list "$dep" &>/dev/null; then
-        info "installing $dep..."
-        brew install "$dep"
-    fi
-done
-
-# ── Fonts ─────────────────────────────────────────────────────────
-info "installing fonts..."
-
-# Install fonts via Homebrew (recommended: auto-updated)
-FONT_CASKS=(
-    "font-jetbrains-mono-nerd-font"
-    "font-cascadia-mono"
-    "font-fira-code-nerd-font"
-    "font-geist-mono-nerd-font"
-    "font-gohufont-nerd-font"
-    "font-iosevka-nerd-font"
-)
-for cask in "${FONT_CASKS[@]}"; do
-    if ! brew list --cask "$cask" &>/dev/null 2>&1; then
-        info "  installing $cask..."
-        brew install --cask "$cask" 2>/dev/null || warn "  $cask (failed)"
-    fi
-done
-ok "Homebrew fonts installed"
+# ── Homebrew bundle (formulae, casks, fonts) ─────────────────────
+# Brewfile tracks everything installed. `brew bundle install` is
+# idempotent: anything already present is skipped automatically.
+info "syncing Brewfile (skips already-installed)..."
+if [ -f "$DOTFILES/Brewfile" ]; then
+    brew bundle install --file="$DOTFILES/Brewfile" --no-upgrade
+    ok "Brewfile synced"
+else
+    warn "no Brewfile found at $DOTFILES/Brewfile"
+fi
 
 # Also copy any .ttf files from dotfiles/fonts directory (local overrides)
 FONT_SRC="$DOTFILES/fonts"
@@ -106,6 +87,7 @@ link "$DOTFILES/starship/starship.toml"  "$HOME/.config/starship.toml"
 link "$DOTFILES/kitty/kitty.conf"        "$HOME/.config/kitty/kitty.conf"
 link "$DOTFILES/kitty/keybindings.conf"  "$HOME/.config/kitty/keybindings.conf"
 link "$DOTFILES/kitty/shortcuts.sh"      "$HOME/.config/kitty/shortcuts.sh"
+link "$DOTFILES/ghostty/config"          "$HOME/.config/ghostty/config"
 link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
 link "$DOTFILES/vscode/settings.json"    "$HOME/Library/Application Support/Code/User/settings.json"
@@ -175,6 +157,28 @@ else
         fi
     done < "$PROFILES_INI"
     _install_ff_profile "$profile_path" "$is_relative"  # flush last section
+fi
+
+# ── npm global packages ──────────────────────────────────────────
+# Syncs CLI tools installed globally via npm (e.g. bobshell).
+# Requires a Node version active via fnm.
+if command -v npm &>/dev/null && [ -f "$DOTFILES/npm/globals.txt" ]; then
+    info "syncing global npm packages..."
+    installed="$(npm ls -g --depth=0 --parseable 2>/dev/null | xargs -n1 basename 2>/dev/null || true)"
+    while IFS= read -r pkg; do
+        [[ "$pkg" =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${pkg// }" ]] && continue
+        pkg="${pkg%%#*}"; pkg="${pkg// /}"
+        [[ -z "$pkg" ]] && continue
+        if echo "$installed" | grep -qx "$pkg"; then
+            warn "  $pkg already installed"
+        else
+            info "  installing $pkg..."
+            npm install -g "$pkg" 2>&1 | tail -1 || warn "  $pkg (failed)"
+        fi
+    done < "$DOTFILES/npm/globals.txt"
+elif ! command -v npm &>/dev/null; then
+    warn "npm not on PATH — run \`fnm install --lts && fnm default lts-latest\` first, then re-run"
 fi
 
 # ── Start services ───────────────────────────────────────────────

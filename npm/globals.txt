@@ -1,0 +1,5 @@
+# Global npm packages — synced by install.sh
+# One package name per line. Comments and blank lines ignored.
+
+# IBM Bob CLI (internal IBM agentic shell tool)
+bobshell

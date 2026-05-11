@@ -1,80 +1,80 @@
+# Minimal Catppuccin Mocha prompt — colors only, no powerline boxes.
+add_newline = true
+
 format = """
-[](lavender)\
-$os\
-[](bg:blue fg:lavender)\
 $directory\
-[](fg:blue bg:sky)\
 $git_branch\
 $git_status\
-[](fg:sky bg:teal)\
 $python\
 $nodejs\
 $rust\
 $golang\
 $c\
-[](fg:teal bg:surface0)\
 $cmd_duration\
-[](fg:surface0)\
 $line_break\
 $character"""
 
 palette = "catppuccin_mocha"
 
-[os]
-disabled = false
-style = "bg:lavender fg:crust"
-
-[os.symbols]
-Macos = " "
-
 [directory]
-style = "bg:blue fg:crust"
-format = "[ $path ]($style)"
+style = "lavender bold"
+format = "[$path]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = " "
-style = "bg:sky fg:crust"
-format = '[ $symbol $branch ]($style)'
+style = "mauve"
+format = ' [on](subtext0) [$symbol$branch]($style)'
 
 [git_status]
-style = "bg:sky fg:crust"
-format = '[$all_status$ahead_behind ]($style)'
+style = "peach"
+format = ' [$all_status$ahead_behind]($style)'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+conflicted = "≠"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
 
 [python]
 symbol = " "
-style = "bg:teal fg:crust"
-format = '[ $symbol ($version) ]($style)'
+style = "yellow"
+format = ' [$symbol$version]($style)'
 
 [nodejs]
 symbol = " "
-style = "bg:teal fg:crust"
-format = '[ $symbol ($version) ]($style)'
+style = "green"
+format = ' [$symbol$version]($style)'
 
 [rust]
 symbol = " "
-style = "bg:teal fg:crust"
-format = '[ $symbol ($version) ]($style)'
+style = "red"
+format = ' [$symbol$version]($style)'
 
 [golang]
 symbol = " "
-style = "bg:teal fg:crust"
-format = '[ $symbol ($version) ]($style)'
+style = "sky"
+format = ' [$symbol$version]($style)'
 
 [c]
 symbol = " "
-style = "bg:teal fg:crust"
-format = '[ $symbol ($version) ]($style)'
+style = "blue"
+format = ' [$symbol$version]($style)'
 
 [cmd_duration]
 min_time = 2_000
-style = "bg:surface0 fg:text"
-format = '[ 󰔟 $duration ]($style)'
+style = "subtext0"
+format = ' [· $duration]($style)'
 
 [character]
-success_symbol = "[❯](green)"
+success_symbol = "[❯](mauve)"
 error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

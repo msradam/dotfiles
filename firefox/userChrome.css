@@ -1,9 +1,6 @@
-/* Catppuccin — colors only.
-   Latte (light) by default, Mocha (dark) via OS or Firefox dark mode,
-   Frappé for private windows. No layout, no animations. */
+/* Catppuccin Latte — pinned to light to match system. */
 
 :root {
-  /* Latte */
   --ctp-base:     #eff1f5;
   --ctp-mantle:   #e6e9ef;
   --ctp-crust:    #dce0e8;
@@ -18,59 +15,6 @@
   --ctp-mauve:    #8839ef;
   --ctp-green:    #40a02b;
   --ctp-red:      #d20f39;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ctp-base:     #1e1e2e;
-    --ctp-mantle:   #181825;
-    --ctp-crust:    #11111b;
-    --ctp-s0:       #313244;
-    --ctp-s1:       #45475a;
-    --ctp-ov1:      #7f849c;
-    --ctp-sub0:     #a6adc8;
-    --ctp-sub1:     #bac2de;
-    --ctp-text:     #cdd6f4;
-    --ctp-lavender: #b4befe;
-    --ctp-blue:     #89b4fa;
-    --ctp-mauve:    #cba6f7;
-    --ctp-green:    #a6e3a1;
-    --ctp-red:      #f38ba8;
-  }
-}
-
-:root[lwt-default-theme-in-dark-mode] {
-  --ctp-base:     #1e1e2e;
-  --ctp-mantle:   #181825;
-  --ctp-crust:    #11111b;
-  --ctp-s0:       #313244;
-  --ctp-s1:       #45475a;
-  --ctp-ov1:      #7f849c;
-  --ctp-sub0:     #a6adc8;
-  --ctp-sub1:     #bac2de;
-  --ctp-text:     #cdd6f4;
-  --ctp-lavender: #b4befe;
-  --ctp-blue:     #89b4fa;
-  --ctp-mauve:    #cba6f7;
-  --ctp-green:    #a6e3a1;
-  --ctp-red:      #f38ba8;
-}
-
-:root[privatebrowsingmode] {
-  --ctp-base:     #303446 !important;
-  --ctp-mantle:   #292c3c !important;
-  --ctp-crust:    #232634 !important;
-  --ctp-s0:       #414559 !important;
-  --ctp-s1:       #51576d !important;
-  --ctp-ov1:      #737994 !important;
-  --ctp-sub0:     #a5adce !important;
-  --ctp-sub1:     #b5bfe2 !important;
-  --ctp-text:     #c6d0f5 !important;
-  --ctp-lavender: #babbf1 !important;
-  --ctp-blue:     #8caaee !important;
-  --ctp-mauve:    #ca9ee6 !important;
-  --ctp-green:    #a6d189 !important;
-  --ctp-red:      #e78284 !important;
 }
 
 /* Map palette to Firefox theme tokens */

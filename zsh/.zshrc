@@ -54,10 +54,8 @@ export FZF_DEFAULT_OPTS=" \
 --separator='─' --scrollbar='│' --info='right'"
 
 # ── Aliases ──────────────────────────────────────────────────────
-alias ls="eza --icons --group-directories-first"
-alias ll="eza -la --icons --group-directories-first --git"
-alias lt="eza --tree --level=2 --icons"
-alias cat="bat --style=auto"
+# Note: bat and eza are intentionally NOT aliased over cat/ls.
+# Invoke them by name when syntax highlighting / icons are wanted.
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -79,6 +77,13 @@ alias reload="source ~/.zshrc"
 alias dots="cd ~/dotfiles"
 alias py="python3"
 alias c="clear"
+
+# Colima (Docker backend) with 16GB-machine defaults
+alias dstart='colima start --memory 4 --cpu 2 --disk 30'
+alias dstop='colima stop'
+
+# Memory pressure + top consumers (macOS ps lacks --sort, use sort)
+alias mem='memory_pressure && echo "---" && ps aux | sort -nrk 4 | head -10'
 
 # ── Functions ─────────────────────────────────────────────────────────
 # Create directory and cd into it

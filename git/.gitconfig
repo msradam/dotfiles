@@ -32,3 +32,9 @@
 	lg = log --oneline --graph --decorate -20
 	last = log -1 HEAD
 	unstage = reset HEAD --
+[lfs "customtransfer.xet"]
+	path = git-xet
+	args = transfer
+	concurrent = true
+[credential]
+	helper = osxkeychain

@@ -1,0 +1,33 @@
+# Ghostty config — mirrors prior kitty setup
+# Font (matches kitty: JetBrains Mono Nerd Font Mono @ 12)
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 12
+
+# Window
+window-padding-x = 8
+window-padding-y = 8
+window-decoration = true
+macos-titlebar-style = tabs
+window-save-state = always
+
+# Theme (Catppuccin Mocha — matches kitty)
+theme = "Catppuccin Mocha"
+
+# Scrollback (bytes; ~25 MB)
+scrollback-limit = 25000000
+
+# Shell integration
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# Cursor (matches kitty: beam, no blink)
+cursor-style = bar
+cursor-style-blink = false
+
+# Clipboard (matches kitty copy_on_select)
+copy-on-select = clipboard
+
+# macOS
+macos-option-as-alt = true
+confirm-close-surface = false
+
