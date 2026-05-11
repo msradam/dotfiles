@@ -2,9 +2,9 @@
 # Reference: https://ghostty.org/docs/config/reference
 
 # ── Theme ─────────────────────────────────────────────────────────
-# Pinned to Catppuccin Latte (matches Firefox userChrome).
-theme = Catppuccin Latte
-window-theme = light
+# Auto-switch with macOS appearance.
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+window-theme = auto
 
 # ── Font ──────────────────────────────────────────────────────────
 font-family = JetBrainsMono Nerd Font Mono
