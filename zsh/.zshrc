@@ -41,6 +41,19 @@ zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
 # ── Modern CLI Tools ─────────────────────────────────────────────
 eval "$(fzf --zsh)" 2>/dev/null
 eval "$(zoxide init zsh)" 2>/dev/null
+
+# Starship: pick palette based on macOS appearance (re-checks every prompt
+# so a live light↔dark flip swaps the prompt colors automatically).
+_starship_palette_switch() {
+    if defaults read -g AppleInterfaceStyle &>/dev/null; then
+        export STARSHIP_CONFIG="$HOME/.config/starship-mocha.toml"
+    else
+        export STARSHIP_CONFIG="$HOME/.config/starship-latte.toml"
+    fi
+}
+autoload -U add-zsh-hook
+add-zsh-hook precmd _starship_palette_switch
+_starship_palette_switch  # set initial value before first prompt
 eval "$(starship init zsh)" 2>/dev/null
 
 # ── fzf Catppuccin Mocha ─────────────────────────────────────────
