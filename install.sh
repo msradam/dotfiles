@@ -38,8 +38,14 @@ echo ""
 # idempotent: anything already present is skipped automatically.
 info "syncing Brewfile (skips already-installed)..."
 if [ -f "$DOTFILES/Brewfile" ]; then
-    brew bundle install --file="$DOTFILES/Brewfile" --no-upgrade
-    ok "Brewfile synced"
+    # Don't abort the whole installer on partial Brewfile failures
+    # (e.g. uv-tool conflicts with pre-existing pip --user binaries).
+    # Symlinks and downstream steps must still run.
+    if brew bundle install --file="$DOTFILES/Brewfile" --no-upgrade; then
+        ok "Brewfile synced"
+    else
+        warn "Brewfile sync had failures — review output above, continuing"
+    fi
 else
     warn "no Brewfile found at $DOTFILES/Brewfile"
 fi
