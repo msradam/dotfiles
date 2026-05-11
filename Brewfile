@@ -192,8 +192,6 @@ cask "google-chrome"
 cask "ibm-cloud-cli"
 # Keyboard customiser
 cask "karabiner-elements"
-# GPU-based terminal emulator
-cask "kitty"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
 # Music player
