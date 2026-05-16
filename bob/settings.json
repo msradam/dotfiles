@@ -148,7 +148,7 @@
   "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
 
   // ── Python ──────────────────────────────────────────────────────
-  "python.analysis.typeCheckingMode": "basic",
+  "basedpyright.analysis.typeCheckingMode": "basic",
   "python.terminal.activateEnvironment": true,
 
   // ── Notebook ────────────────────────────────────────────────────

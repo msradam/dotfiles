@@ -1,0 +1,31 @@
+# AI agent
+anthropic.claude-code
+
+# Theme
+mvllow.rose-pine
+
+# Python
+charliermarsh.ruff            # lint + format (replaces flake8/black/isort)
+ms-python.python              # core (pulls debugpy as dep)
+ms-python.vscode-python-envs  # environment management
+detachhead.basedpyright       # type checking (Pyright fork; Pylance is MS-only)
+
+# Notebooks (pulls keymap, renderers, cell-tags, slideshow as deps)
+ms-toolsai.jupyter
+
+# JS / TS
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+
+# Config formats
+redhat.vscode-yaml
+tamasfe.even-better-toml
+
+# Authoring
+myriad-dreamin.tinymist       # Typst LSP + preview
+marp-team.marp-vscode         # Markdown → slide decks
+marimo-team.vscode-marimo     # Marimo reactive notebooks
+
+# Workflow
+usernamehw.errorlens          # inline diagnostics
+gruntfuggly.todo-tree         # surface TODO/FIXME across project

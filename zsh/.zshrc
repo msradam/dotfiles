@@ -129,4 +129,9 @@ export BAT_THEME="Rose Pine"
 eval "$(fnm env --use-on-cd 2>/dev/null)" || true
 
 # ── PATH ─────────────────────────────────────────────────────────
-export PATH="$HOME/.platformio/penv/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# IBM Bob IDE CLI (`bobide`) — VS Code-fork's `code` equivalent
+if [ -d "/Applications/IBM Bob.app/Contents/Resources/app/bin" ]; then
+    export PATH="/Applications/IBM Bob.app/Contents/Resources/app/bin:$PATH"
+fi

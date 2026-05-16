@@ -6,26 +6,16 @@ tap "theboredteam/boring-notch"
 tap "zkondor/dist"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
-# Next-gen compiler infrastructure
-brew "llvm"
-# GNU compiler collection for arm-none-eabi
-brew "arm-none-eabi-gcc"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
-brew "clang-format"
 # Cross-platform make
 brew "cmake"
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
-# Static analysis of C and C++ code
-brew "cppcheck"
 # TIFF library and utilities
 brew "libtiff"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
-# LLVM bytecode to JavaScript compiler
-brew "emscripten"
 # Modern, maintained replacement for ls
 brew "eza"
 # Play, record, convert, and stream select audio and video codecs
@@ -58,8 +48,6 @@ brew "git-xet"
 brew "glab"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# System/370, ESA/390 and z/Architecture Emulator
-brew "hercules"
 # Client library for huggingface.co hub
 brew "hf", link: false
 # Modern load testing tool, using Go and JavaScript
@@ -80,8 +68,6 @@ brew "luajit"
 brew "netlify-cli"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
-# On-chip debugging, in-system programming and boundary-scan testing
-brew "open-ocd"
 # Development kit for the Java programming language
 brew "openjdk@17"
 # Utilities to encode, inspect, and decode .opus files
@@ -104,8 +90,6 @@ brew "spatialite-tools"
 brew "sshpass"
 # Cross-shell prompt for astronauts
 brew "starship"
-# STM32 discovery line Linux programmer
-brew "stlink"
 # Build vector tilesets from collections of GeoJSON features
 brew "tippecanoe"
 # CLI for Todoist
@@ -213,30 +197,14 @@ cask "slack"
 cask "slack-cli"
 # To-do list
 cask "todoist-app"
-# Open-source code editor
-cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Toggle the MacBook notch on/off (no system permissions required)
 cask "zkondor/dist/znotch"
-vscode "anthropic.claude-code"
-vscode "mvllow.rose-pine"
-vscode "charliermarsh.ruff"
-vscode "dbaeumer.vscode-eslint"
-vscode "esbenp.prettier-vscode"
-vscode "ms-python.debugpy"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-python.vscode-python-envs"
-vscode "ms-toolsai.jupyter"
-vscode "ms-toolsai.jupyter-keymap"
-vscode "ms-toolsai.jupyter-renderers"
-vscode "ms-toolsai.vscode-jupyter-cell-tags"
-vscode "ms-toolsai.vscode-jupyter-slideshow"
-vscode "redhat.vscode-yaml"
-vscode "usernamehw.errorlens"
+# IDE (VS Code fork) — install manually from IBM internal distribution.
+# Settings + extensions are managed by install.sh from dotfiles/bob/.
 go "golang.org/x/tools/cmd/deadcode"
 go "golang.org/dl/go1.24.0"
 go "github.com/golangci/golangci-lint/cmd/golangci-lint"

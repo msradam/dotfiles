@@ -113,13 +113,17 @@ link "$DOTFILES/starship/starship-main.toml"   "$HOME/.config/starship-main.toml
 link "$DOTFILES/ghostty/config"          "$HOME/.config/ghostty/config"
 link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
-link "$DOTFILES/vscode/settings.json"    "$HOME/Library/Application Support/Code/User/settings.json"
+link "$DOTFILES/bob/settings.json"       "$HOME/Library/Application Support/IBM Bob/User/settings.json"
 
-# ── VS Code extensions ────────────────────────────────────────────
+# ── Bob (VS Code fork) extensions ────────────────────────────────
+# Bob ships `bobide` as its CLI. It may not be on PATH until the
+# user runs "Shell Command: Install 'bobide' command in PATH" from
+# inside the app, so fall back to the absolute path inside the bundle.
+BOBIDE_BIN="$(command -v bobide || true)"
+[ -z "$BOBIDE_BIN" ] && BOBIDE_BIN="/Applications/IBM Bob.app/Contents/Resources/app/bin/bobide"
 
-vscode_install_extensions() {
-    local cli="$1" label="$2"
-    info "installing extensions for $label..."
+bob_install_extensions() {
+    info "installing Bob extensions..."
     local failed=0
     while IFS= read -r line; do
         [[ "$line" =~ ^[[:space:]]*# ]] && continue   # skip comments
@@ -127,21 +131,21 @@ vscode_install_extensions() {
         local ext="${line%%#*}"                        # strip inline comment
         ext="${ext// /}"
         [[ -z "$ext" ]] && continue
-        if "$cli" --install-extension "$ext" --force &>/dev/null; then
+        if "$BOBIDE_BIN" --install-extension "$ext" --force &>/dev/null; then
             ok "  $ext"
         else
             warn "  $ext (failed — skipped)"
             (( failed++ )) || true
         fi
-    done < "$DOTFILES/vscode/extensions.txt"
-    [ "$failed" -gt 0 ] && warn "$label: $failed extension(s) failed to install"
+    done < "$DOTFILES/bob/extensions.txt"
+    [ "$failed" -gt 0 ] && warn "Bob: $failed extension(s) failed to install"
 }
 
-if command -v code &>/dev/null; then
-    info "VS Code detected"
-    vscode_install_extensions code "VS Code"
+if [ -x "$BOBIDE_BIN" ]; then
+    info "Bob detected: $BOBIDE_BIN"
+    bob_install_extensions
 else
-    warn "VS Code CLI (code) not found — skipping VS Code extensions"
+    warn "bobide CLI not found — install IBM Bob first, then re-run"
 fi
 
 # ── Firefox userChrome ───────────────────────────────────────────

@@ -9,7 +9,7 @@ ghostty/      Ghostty terminal config
 starship/     Starship prompt palettes (dawn + main, auto-switched by macOS appearance)
 zsh/          .zshrc, .zprofile, syntax-highlighting theme
 git/          .gitconfig
-vscode/       settings.json + extensions list
+bob/          IBM Bob IDE (VS Code fork) settings.json + extensions list
 firefox/      userChrome.css
 yabai/        tiling window manager config
 fonts/        vendored fonts not available via Homebrew
