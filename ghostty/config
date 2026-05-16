@@ -3,11 +3,11 @@
 
 # ── Theme ─────────────────────────────────────────────────────────
 # Auto-switch with macOS appearance.
-theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+theme = light:Rose Pine Dawn,dark:Rose Pine
 window-theme = auto
 
 # ── Font ──────────────────────────────────────────────────────────
-font-family = JetBrainsMono Nerd Font Mono
+font-family = IoskeleyMonoTerm Nerd Font
 font-size = 13
 font-thicken = true
 adjust-cell-height = 10%
@@ -17,12 +17,14 @@ window-padding-x = 10
 window-padding-y = 10
 window-padding-balance = true
 window-decoration = true
-window-save-state = always
-window-inherit-working-directory = true
+window-save-state = never
+window-inherit-working-directory = false
+working-directory = home
 window-inherit-font-size = true
 window-new-tab-position = end
 window-colorspace = display-p3
-background-opacity = 0.97
+background-opacity = 0.85
+background-blur = 20
 unfocused-split-opacity = 0.85
 macos-titlebar-style = tabs
 macos-option-as-alt = true
@@ -46,7 +48,7 @@ shell-integration = zsh
 shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
 
 # ── Scrollback / behavior ─────────────────────────────────────────
-scrollback-limit = 25000000
+scrollback-limit = 10000000
 mouse-scroll-multiplier = 1.5
 resize-overlay = after-first
 confirm-close-surface = false

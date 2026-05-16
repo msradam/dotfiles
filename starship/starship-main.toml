@@ -1,0 +1,94 @@
+# Rosé Pine (main) — dark palette.
+add_newline = true
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$rust\
+$golang\
+$c\
+$cmd_duration\
+$line_break\
+$character"""
+
+palette = "rose_pine"
+
+[directory]
+style = "iris bold"
+format = "[$path]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "iris"
+format = ' [on](subtle) [$symbol$branch]($style)'
+
+[git_status]
+style = "gold"
+format = ' [$all_status$ahead_behind]($style)'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+conflicted = "≠"
+untracked = "?"
+stashed = "≡"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+[python]
+symbol = " "
+style = "gold"
+format = ' [$symbol$version]($style)'
+
+[nodejs]
+symbol = " "
+style = "foam"
+format = ' [$symbol$version]($style)'
+
+[rust]
+symbol = " "
+style = "love"
+format = ' [$symbol$version]($style)'
+
+[golang]
+symbol = " "
+style = "pine"
+format = ' [$symbol$version]($style)'
+
+[c]
+symbol = " "
+style = "foam"
+format = ' [$symbol$version]($style)'
+
+[cmd_duration]
+min_time = 2_000
+style = "subtle"
+format = ' [· $duration]($style)'
+
+[character]
+success_symbol = "[❯](iris)"
+error_symbol = "[❯](love)"
+vimcmd_symbol = "[❮](foam)"
+
+[palettes.rose_pine]
+base           = "#191724"
+surface        = "#1f1d2e"
+overlay        = "#26233a"
+muted          = "#6e6a86"
+subtle         = "#908caa"
+text           = "#e0def4"
+love           = "#eb6f92"
+gold           = "#f6c177"
+rose           = "#ebbcba"
+pine           = "#31748f"
+foam           = "#9ccfd8"
+iris           = "#c4a7e7"
+highlight_low  = "#21202e"
+highlight_med  = "#403d52"
+highlight_high = "#524f67"

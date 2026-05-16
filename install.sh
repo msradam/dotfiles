@@ -33,6 +33,25 @@ echo "  ║       dotfiles install script        ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
 
+# ── First-flight: Xcode CLT + Homebrew ───────────────────────────
+# On a fresh machine neither exists. Install before anything else
+# touches `brew`. Both commands are idempotent / no-op when present.
+if ! xcode-select -p &>/dev/null; then
+    info "installing Xcode Command Line Tools (a GUI prompt will appear)..."
+    xcode-select --install || true
+    warn "re-run this script once the CLT install finishes"
+    exit 0
+fi
+
+if ! command -v brew &>/dev/null; then
+    info "installing Homebrew..."
+    NONINTERACTIVE=1 /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # shellcheck disable=SC2016
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    ok "Homebrew installed"
+fi
+
 # ── Homebrew bundle (formulae, casks, fonts) ─────────────────────
 # Brewfile tracks everything installed. `brew bundle install` is
 # idempotent: anything already present is skipped automatically.
@@ -68,29 +87,29 @@ else
     warn "fonts directory not found"
 fi
 
-# ── Catppuccin for bat ─────────────────────────────────────────
+# ── Rosé Pine for bat ──────────────────────────────────────────
 info "setting up bat theme..."
 BAT_THEMES="$(bat --config-dir)/themes"
 mkdir -p "$BAT_THEMES"
-if [ ! -f "$BAT_THEMES/Catppuccin Mocha.tmTheme" ]; then
-    curl -fsSL -o "$BAT_THEMES/Catppuccin Mocha.tmTheme" \
-        "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
+if [ ! -f "$BAT_THEMES/Rose Pine.tmTheme" ]; then
+    curl -fsSL -o "$BAT_THEMES/Rose Pine.tmTheme" \
+        "https://raw.githubusercontent.com/rose-pine/tm-theme/main/themes/rose-pine.tmTheme"
     bat cache --build
-    ok "bat catppuccin theme installed"
+    ok "bat rose-pine theme installed"
 fi
 
-# ── Catppuccin for zsh-syntax-highlighting ────────────────────
+# ── Rosé Pine for zsh-syntax-highlighting ─────────────────────
 info "setting up zsh-syntax-highlighting theme..."
 mkdir -p "$HOME/.zsh"
-link "$DOTFILES/zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh" "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
+link "$DOTFILES/zsh/rose-pine-zsh-syntax-highlighting.zsh" "$HOME/.zsh/rose-pine-zsh-syntax-highlighting.zsh"
 
 # ── Symlinks ─────────────────────────────────────────────────────
 info "linking configs..."
 
 link "$DOTFILES/zsh/.zshrc"              "$HOME/.zshrc"
 link "$DOTFILES/zsh/.zprofile"           "$HOME/.zprofile"
-link "$DOTFILES/starship/starship-latte.toml"  "$HOME/.config/starship-latte.toml"
-link "$DOTFILES/starship/starship-mocha.toml"  "$HOME/.config/starship-mocha.toml"
+link "$DOTFILES/starship/starship-dawn.toml"   "$HOME/.config/starship-dawn.toml"
+link "$DOTFILES/starship/starship-main.toml"   "$HOME/.config/starship-main.toml"
 link "$DOTFILES/ghostty/config"          "$HOME/.config/ghostty/config"
 link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
@@ -184,6 +203,14 @@ if command -v npm &>/dev/null && [ -f "$DOTFILES/npm/globals.txt" ]; then
 elif ! command -v npm &>/dev/null; then
     warn "npm not on PATH — run \`fnm install --lts && fnm default lts-latest\` first, then re-run"
 fi
+
+# ── macOS app defaults ───────────────────────────────────────────
+# Disable macOS Resume for Ghostty so new launches don't restore the
+# previous working directory / surfaces. Ghostty's own
+# window-save-state=never is overridden by this NSGlobal flag.
+info "applying macOS app defaults..."
+defaults write com.mitchellh.ghostty NSQuitAlwaysKeepsWindows -bool false
+ok "Ghostty: macOS Resume disabled"
 
 # ── Start services ───────────────────────────────────────────────
 info "starting services..."

@@ -15,7 +15,7 @@ source $ZSH/oh-my-zsh.sh
 # ── External Plugins ─────────────────────────────────────────────
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.zsh/rose-pine-zsh-syntax-highlighting.zsh 2>/dev/null
 
 if type brew &>/dev/null; then
     FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
@@ -46,9 +46,9 @@ eval "$(zoxide init zsh)" 2>/dev/null
 # so a live light↔dark flip swaps the prompt colors automatically).
 _starship_palette_switch() {
     if defaults read -g AppleInterfaceStyle &>/dev/null; then
-        export STARSHIP_CONFIG="$HOME/.config/starship-mocha.toml"
+        export STARSHIP_CONFIG="$HOME/.config/starship-main.toml"
     else
-        export STARSHIP_CONFIG="$HOME/.config/starship-latte.toml"
+        export STARSHIP_CONFIG="$HOME/.config/starship-dawn.toml"
     fi
 }
 autoload -U add-zsh-hook
@@ -56,12 +56,12 @@ add-zsh-hook precmd _starship_palette_switch
 _starship_palette_switch  # set initial value before first prompt
 eval "$(starship init zsh)" 2>/dev/null
 
-# ── fzf Catppuccin Mocha ─────────────────────────────────────────
+# ── fzf Rosé Pine ────────────────────────────────────────────────
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a \
+--color=bg+:#26233a,bg:#191724,spinner:#ebbcba,hl:#eb6f92 \
+--color=fg:#e0def4,header:#eb6f92,info:#c4a7e7,pointer:#ebbcba \
+--color=marker:#c4a7e7,fg+:#e0def4,prompt:#c4a7e7,hl+:#eb6f92 \
+--color=selected-bg:#403d52 \
 --border='rounded' --preview-window='border-rounded' \
 --prompt='❯ ' --marker='◆' --pointer='▶' \
 --separator='─' --scrollbar='│' --info='right'"
@@ -123,7 +123,7 @@ gstash() {
 export EDITOR="vim"
 export VISUAL="vim"
 export LANG=en_US.UTF-8
-export BAT_THEME="Catppuccin Mocha"
+export BAT_THEME="Rose Pine"
 
 # ── fnm (Fast Node Manager) ────────────────────────────────────────
 eval "$(fnm env --use-on-cd 2>/dev/null)" || true
