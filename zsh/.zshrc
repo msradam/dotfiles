@@ -15,7 +15,8 @@ source $ZSH/oh-my-zsh.sh
 # ── External Plugins ─────────────────────────────────────────────
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-source ~/.zsh/rose-pine-zsh-syntax-highlighting.zsh 2>/dev/null
+# Rosé Pine palette for syntax highlighting is sourced by
+# _palette_switch below (it picks main vs dawn per appearance).
 
 if type brew &>/dev/null; then
     FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
@@ -42,18 +43,21 @@ zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
 eval "$(fzf --zsh)" 2>/dev/null
 eval "$(zoxide init zsh)" 2>/dev/null
 
-# Starship: pick palette based on macOS appearance (re-checks every prompt
-# so a live light↔dark flip swaps the prompt colors automatically).
-_starship_palette_switch() {
+# Pick Starship + zsh-syntax-highlighting palettes based on macOS
+# appearance. Re-runs every prompt so a live light↔dark flip swaps
+# both the prompt and the input highlighting automatically.
+_palette_switch() {
     if defaults read -g AppleInterfaceStyle &>/dev/null; then
         export STARSHIP_CONFIG="$HOME/.config/starship-main.toml"
+        source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-main.zsh" 2>/dev/null
     else
         export STARSHIP_CONFIG="$HOME/.config/starship-dawn.toml"
+        source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-dawn.zsh" 2>/dev/null
     fi
 }
 autoload -U add-zsh-hook
-add-zsh-hook precmd _starship_palette_switch
-_starship_palette_switch  # set initial value before first prompt
+add-zsh-hook precmd _palette_switch
+_palette_switch  # set initial value before first prompt
 eval "$(starship init zsh)" 2>/dev/null
 
 # ── fzf Rosé Pine ────────────────────────────────────────────────

@@ -105,9 +105,15 @@ if [ ! -f "$BAT_THEMES/Rose Pine.tmTheme" ]; then
 fi
 
 # ── Rosé Pine for zsh-syntax-highlighting ─────────────────────
-info "setting up zsh-syntax-highlighting theme..."
+# Two palettes; .zshrc precmd hook picks the right one based on the
+# macOS appearance, mirroring the Starship dawn/main split.
+info "setting up zsh-syntax-highlighting themes..."
 mkdir -p "$HOME/.zsh"
-link "$DOTFILES/zsh/rose-pine-zsh-syntax-highlighting.zsh" "$HOME/.zsh/rose-pine-zsh-syntax-highlighting.zsh"
+# Clean up the pre-split symlink if it survives from an older install.
+[ -L "$HOME/.zsh/rose-pine-zsh-syntax-highlighting.zsh" ] && \
+    rm -f "$HOME/.zsh/rose-pine-zsh-syntax-highlighting.zsh"
+link "$DOTFILES/zsh/rose-pine-zsh-syntax-highlighting-main.zsh" "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-main.zsh"
+link "$DOTFILES/zsh/rose-pine-zsh-syntax-highlighting-dawn.zsh" "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-dawn.zsh"
 
 # ── Symlinks ─────────────────────────────────────────────────────
 info "linking configs..."
