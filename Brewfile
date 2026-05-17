@@ -3,7 +3,6 @@ tap "auth0/auth0-cli"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "theboredteam/boring-notch"
-tap "zkondor/dist"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -64,6 +63,8 @@ brew "lightning"
 brew "llama.cpp"
 # Just-In-Time Compiler (JIT) for the Lua programming language
 brew "luajit"
+# Mac App Store command-line interface
+brew "mas"
 # Netlify command-line tool
 brew "netlify-cli"
 # Create, run, and share large language models (LLMs)
@@ -201,8 +202,10 @@ cask "todoist-app"
 cask "vlc"
 # Native desktop client for WhatsApp
 cask "whatsapp"
-# Toggle the MacBook notch on/off (no system permissions required)
-cask "zkondor/dist/znotch"
+# Utility to hide the notch by blacking out the menu bar
+cask "topnotch"
+# Native Google Messages client for Mac (Tunabelly Software)
+mas "Texty for Google Messages", id: 1538996043
 # IDE (VS Code fork) — install manually from IBM internal distribution.
 # Settings + extensions are managed by install.sh from dotfiles/bob/.
 go "golang.org/x/tools/cmd/deadcode"

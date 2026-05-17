@@ -28,7 +28,3 @@ git clone https://github.com/msradam/dotfiles.git ~/dotfiles
 On a fresh machine the first run bootstraps Xcode Command Line Tools (GUI prompt) and Homebrew; re-run the script once the CLT install completes.
 
 `install.sh` is idempotent and additive: it installs or upgrades packages and links configs, but never removes anything. Safe to re-run.
-
-## Disclosure
-
-Parts of this repository were authored or refined with the help of LLM assistants (primarily Claude). Configurations, scripts, and commit content have been reviewed and verified by me before landing on `main`.

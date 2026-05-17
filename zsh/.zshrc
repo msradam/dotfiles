@@ -67,8 +67,12 @@ export FZF_DEFAULT_OPTS=" \
 --separator='─' --scrollbar='│' --info='right'"
 
 # ── Aliases ──────────────────────────────────────────────────────
-# Note: bat and eza are intentionally NOT aliased over cat/ls.
-# Invoke them by name when syntax highlighting / icons are wanted.
+# Note: eza is intentionally NOT aliased over ls. Invoke it by name
+# when icons / git status columns are wanted.
+# bat IS aliased over cat below — configured (BAT_STYLE/BAT_PAGING)
+# to emit plain text with syntax highlighting and no decorations.
+
+alias cat="bat"
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -124,6 +128,8 @@ export EDITOR="vim"
 export VISUAL="vim"
 export LANG=en_US.UTF-8
 export BAT_THEME="Rose Pine"
+export BAT_STYLE="plain"     # no line numbers, no header — cat-like
+export BAT_PAGING="never"    # don't pipe through less for short files
 
 # ── fnm (Fast Node Manager) ────────────────────────────────────────
 eval "$(fnm env --use-on-cd 2>/dev/null)" || true
