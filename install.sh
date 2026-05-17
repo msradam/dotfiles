@@ -88,14 +88,20 @@ else
 fi
 
 # ── Rosé Pine for bat ──────────────────────────────────────────
+# Upstream lives at rose-pine/tm-theme. Path moved from themes/ to
+# dist/ at some point; refresh if it 404s again.
 info "setting up bat theme..."
 BAT_THEMES="$(bat --config-dir)/themes"
 mkdir -p "$BAT_THEMES"
 if [ ! -f "$BAT_THEMES/Rose Pine.tmTheme" ]; then
-    curl -fsSL -o "$BAT_THEMES/Rose Pine.tmTheme" \
-        "https://raw.githubusercontent.com/rose-pine/tm-theme/main/themes/rose-pine.tmTheme"
-    bat cache --build
-    ok "bat rose-pine theme installed"
+    if curl -fsSL -o "$BAT_THEMES/Rose Pine.tmTheme" \
+        "https://raw.githubusercontent.com/rose-pine/tm-theme/main/dist/rose-pine.tmTheme"; then
+        bat cache --build >/dev/null
+        ok "bat rose-pine theme installed"
+    else
+        rm -f "$BAT_THEMES/Rose Pine.tmTheme"
+        warn "bat rose-pine theme fetch failed — continuing"
+    fi
 fi
 
 # ── Rosé Pine for zsh-syntax-highlighting ─────────────────────
@@ -138,7 +144,11 @@ bob_install_extensions() {
             (( failed++ )) || true
         fi
     done < "$DOTFILES/bob/extensions.txt"
-    [ "$failed" -gt 0 ] && warn "Bob: $failed extension(s) failed to install"
+    # NB: bare `[ -gt 0 ] && warn` returns non-zero when failed=0,
+    # which trips `set -e` on the function call. Use an explicit `if`.
+    if [ "$failed" -gt 0 ]; then
+        warn "Bob: $failed extension(s) failed to install"
+    fi
 }
 
 if [ -x "$BOBIDE_BIN" ]; then
