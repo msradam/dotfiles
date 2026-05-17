@@ -14,7 +14,17 @@ warn()  { echo -e "${YELLOW}[skip]${NC}  $1"; }
 link() {
     local src="$1" dst="$2"
     if [ -L "$dst" ]; then
-        warn "$dst already linked"
+        # Dangling symlink (target gone) — replace silently. Existing
+        # valid symlinks are left untouched even if they point to a
+        # different source, to avoid clobbering user-managed links.
+        if [ ! -e "$dst" ]; then
+            rm -f "$dst"
+            mkdir -p "$(dirname "$dst")"
+            ln -sf "$src" "$dst"
+            ok "$dst → $src (replaced dangling symlink)"
+        else
+            warn "$dst already linked"
+        fi
     elif [ -e "$dst" ]; then
         mv "$dst" "${dst}.backup"
         info "backed up $dst → ${dst}.backup"
@@ -87,21 +97,35 @@ else
     warn "fonts directory not found"
 fi
 
-# ── Rosé Pine for bat ──────────────────────────────────────────
-# Upstream lives at rose-pine/tm-theme. Path moved from themes/ to
-# dist/ at some point; refresh if it 404s again.
-info "setting up bat theme..."
-BAT_THEMES="$(bat --config-dir)/themes"
-mkdir -p "$BAT_THEMES"
-if [ ! -f "$BAT_THEMES/Rose Pine.tmTheme" ]; then
-    if curl -fsSL -o "$BAT_THEMES/Rose Pine.tmTheme" \
-        "https://raw.githubusercontent.com/rose-pine/tm-theme/main/dist/rose-pine.tmTheme"; then
+# ── Rosé Pine for bat (main + dawn) ────────────────────────────
+# Upstream lives at rose-pine/tm-theme/dist. _palette_switch in
+# .zshrc swaps BAT_THEME between "Rose Pine" and "Rose Pine Dawn"
+# based on macOS appearance, so both files need to be present.
+if command -v bat &>/dev/null; then
+    info "setting up bat themes..."
+    BAT_THEMES="$(bat --config-dir)/themes"
+    mkdir -p "$BAT_THEMES"
+    fetched=0
+    _fetch_theme() {
+        local name="$1" remote="$2"
+        local dst="$BAT_THEMES/$name.tmTheme"
+        [ -f "$dst" ] && return 0
+        if curl -fsSL -o "$dst" \
+            "https://raw.githubusercontent.com/rose-pine/tm-theme/main/dist/$remote"; then
+            ok "  $name fetched"
+            fetched=1
+        else
+            rm -f "$dst"
+            warn "  $name fetch failed — continuing"
+        fi
+    }
+    _fetch_theme "Rose Pine"      "rose-pine.tmTheme"
+    _fetch_theme "Rose Pine Dawn" "rose-pine-dawn.tmTheme"
+    if [ "$fetched" -eq 1 ]; then
         bat cache --build >/dev/null
-        ok "bat rose-pine theme installed"
-    else
-        rm -f "$BAT_THEMES/Rose Pine.tmTheme"
-        warn "bat rose-pine theme fetch failed — continuing"
     fi
+else
+    warn "bat not on PATH — skipping bat theme setup"
 fi
 
 # ── Rosé Pine for zsh-syntax-highlighting ─────────────────────

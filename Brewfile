@@ -1,7 +1,5 @@
-tap "armmbed/formulae"
 tap "auth0/auth0-cli"
 tap "koekeishiya/formulae"
-tap "nikitabobko/tap"
 tap "theboredteam/boring-notch"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"

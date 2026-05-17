@@ -43,15 +43,33 @@ zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
 eval "$(fzf --zsh)" 2>/dev/null
 eval "$(zoxide init zsh)" 2>/dev/null
 
-# Pick Starship + zsh-syntax-highlighting palettes based on macOS
-# appearance. Re-runs every prompt so a live light↔dark flip swaps
-# both the prompt and the input highlighting automatically.
+# Pick Starship + zsh-syntax-highlighting + fzf + bat palettes based
+# on macOS appearance. Re-runs every prompt so a live light↔dark flip
+# swaps all four together.
+_FZF_OPTS_COMMON="--border='rounded' --preview-window='border-rounded' \
+--prompt='❯ ' --marker='◆' --pointer='▶' \
+--separator='─' --scrollbar='│' --info='right'"
+
 _palette_switch() {
     if defaults read -g AppleInterfaceStyle &>/dev/null; then
         export STARSHIP_CONFIG="$HOME/.config/starship-main.toml"
+        export BAT_THEME="Rose Pine"
+        export FZF_DEFAULT_OPTS=" \
+--color=bg+:#26233a,bg:#191724,spinner:#ebbcba,hl:#eb6f92 \
+--color=fg:#e0def4,header:#eb6f92,info:#c4a7e7,pointer:#ebbcba \
+--color=marker:#c4a7e7,fg+:#e0def4,prompt:#c4a7e7,hl+:#eb6f92 \
+--color=selected-bg:#403d52 \
+$_FZF_OPTS_COMMON"
         source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-main.zsh" 2>/dev/null
     else
         export STARSHIP_CONFIG="$HOME/.config/starship-dawn.toml"
+        export BAT_THEME="Rose Pine Dawn"
+        export FZF_DEFAULT_OPTS=" \
+--color=bg+:#f2e9e1,bg:#faf4ed,spinner:#d7827e,hl:#b4637a \
+--color=fg:#575279,header:#b4637a,info:#907aa9,pointer:#d7827e \
+--color=marker:#907aa9,fg+:#575279,prompt:#907aa9,hl+:#b4637a \
+--color=selected-bg:#dfdad9 \
+$_FZF_OPTS_COMMON"
         source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-dawn.zsh" 2>/dev/null
     fi
 }
@@ -59,16 +77,6 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd _palette_switch
 _palette_switch  # set initial value before first prompt
 eval "$(starship init zsh)" 2>/dev/null
-
-# ── fzf Rosé Pine ────────────────────────────────────────────────
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#26233a,bg:#191724,spinner:#ebbcba,hl:#eb6f92 \
---color=fg:#e0def4,header:#eb6f92,info:#c4a7e7,pointer:#ebbcba \
---color=marker:#c4a7e7,fg+:#e0def4,prompt:#c4a7e7,hl+:#eb6f92 \
---color=selected-bg:#403d52 \
---border='rounded' --preview-window='border-rounded' \
---prompt='❯ ' --marker='◆' --pointer='▶' \
---separator='─' --scrollbar='│' --info='right'"
 
 # ── Aliases ──────────────────────────────────────────────────────
 # Note: eza is intentionally NOT aliased over ls. Invoke it by name
@@ -131,7 +139,7 @@ gstash() {
 export EDITOR="vim"
 export VISUAL="vim"
 export LANG=en_US.UTF-8
-export BAT_THEME="Rose Pine"
+# BAT_THEME is set by _palette_switch above (per macOS appearance).
 export BAT_STYLE="plain"     # no line numbers, no header — cat-like
 export BAT_PAGING="never"    # don't pipe through less for short files
 

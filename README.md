@@ -27,4 +27,4 @@ git clone https://github.com/msradam/dotfiles.git ~/dotfiles
 
 On a fresh machine the first run bootstraps Xcode Command Line Tools (GUI prompt) and Homebrew; re-run the script once the CLT install completes.
 
-`install.sh` is idempotent and additive: it installs or upgrades packages and links configs, but never removes anything. Safe to re-run.
+`install.sh` is idempotent: it installs or upgrades packages and links configs. It will replace dangling symlinks pointing at stale paths, but otherwise won't touch existing files. Safe to re-run.
