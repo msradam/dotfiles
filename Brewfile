@@ -5,6 +5,8 @@ tap "theboredteam/boring-notch"
 brew "openssl@3"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Modern TUI system monitor
+brew "btop"
 # Cross-platform make
 brew "cmake"
 # Container runtimes on MacOS (and Linux) with minimal setup
@@ -13,12 +15,18 @@ brew "colima"
 brew "libtiff"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
+# Git diff viewer with syntax highlighting and side-by-side support
+brew "delta"
+# Load/unload environment variables based on .envrc
+brew "direnv"
+# Disk usage analyzer (du replacement)
+brew "dust"
 # Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# Fast and simple Node.js version manager
-brew "fnm"
 # Library for manipulating fonts
 brew "fonttools"
 # Command-line fuzzy finder written in Go
@@ -41,14 +49,20 @@ brew "gemini-cli"
 brew "gh"
 # Git LFS plugin that uploads and downloads using the Xet protocol
 brew "git-xet"
+# Git Large File Storage
+brew "git-lfs"
 # Open-source GitLab command-line tool
 brew "glab"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Client library for huggingface.co hub
 brew "hf", link: false
+# Command-line JSON processor
+brew "jq"
 # Modern load testing tool, using Go and JavaScript
 brew "k6"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Terminal file manager
 brew "lf"
 # NetworKit is an OS-toolkit for large-scale network analysis
@@ -79,6 +93,10 @@ brew "p7zip"
 brew "pandoc"
 # Single-file executable tool for creating, reading and uploading PMTiles archives
 brew "pmtiles"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Intuitive find & replace CLI (sd replaces sed for common tasks)
+brew "sd"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
 # Static analysis and lint tool, for (ba)sh scripts
@@ -91,16 +109,20 @@ brew "sshpass"
 brew "starship"
 # Build vector tilesets from collections of GeoJSON features
 brew "tippecanoe"
+# Terminal multiplexer
+brew "tmux"
 # CLI for Todoist
 brew "todoist-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Markup-based typesetting system
 brew "typst"
-# Extremely fast Python package installer and resolver, written in Rust
+# Extremely fast Python package installer, resolver, and version manager
 brew "uv"
 # Your CLI home video recorder
 brew "vhs"
+# Manage multiple Node.js versions (replaces fnm — shim-based, no shell hook overhead)
+brew "volta"
 # Ogg Vorbis CODEC tools
 brew "vorbis-tools"
 # Internet file retriever
@@ -111,16 +133,14 @@ brew "wireshark"
 brew "x3270"
 # C++ YAML parser and emitter for YAML 1.2 spec
 brew "yaml-cpp"
+# Command-line YAML/JSON/XML processor
+brew "yq"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Shell history with SQLite backend and optional cross-machine sync
+brew "atuin"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Fish-like fast/unobtrusive autosuggestions for zsh
-brew "zsh-autosuggestions"
-# Additional completion definitions for zsh
-brew "zsh-completions"
-# Fish shell like syntax highlighting for zsh
-brew "zsh-syntax-highlighting"
 # Build, manage and test your Auth0 integrations from the command line
 brew "auth0/auth0-cli/auth0"
 # A tiling window manager for macOS based on binary space partitioning.
@@ -196,6 +216,8 @@ cask "slack"
 cask "slack-cli"
 # To-do list
 cask "todoist-app"
+# Code editor
+cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
 # Native desktop client for WhatsApp
@@ -215,7 +237,9 @@ go "golang.org/x/vuln/cmd/govulncheck"
 go "go.uber.org/nilaway/cmd/nilaway"
 go "honnef.co/go/tools/cmd/staticcheck"
 go "go.k6.io/xk6/cmd/xk6"
+uv "aider-chat"
 uv "huggingface-hub"
+uv "llm"
 uv "podman-compose"
 uv "pyan3"
 uv "radon"

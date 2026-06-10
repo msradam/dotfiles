@@ -1,26 +1,24 @@
-# ── Oh My Zsh ────────────────────────────────────────────────────
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME=""  # using Starship prompt instead
+# ── Completion styles (must precede zimfw/compinit) ──────────────
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
 
-plugins=(
-    git
-    sudo              # ESC ESC to prepend sudo
-    command-not-found
-    brew
-    macos
-)
+# ── Volta (Node.js) — must be on PATH before zimfw sees npm completions
+export VOLTA_HOME="${HOME}/.volta"
+export PATH="${VOLTA_HOME}/bin:${HOME}/.local/bin:${PATH}"
 
-source $ZSH/oh-my-zsh.sh
-
-# ── External Plugins ─────────────────────────────────────────────
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-# Rosé Pine palette for syntax highlighting is sourced by
-# _palette_switch below (it picks main vs dawn per appearance).
-
-if type brew &>/dev/null; then
-    FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
+# ── zimfw ─────────────────────────────────────────────────────────
+# Self-bootstraps on fresh machines; modules listed in ~/.zimrc
+ZIM_HOME="${HOME}/.zim"
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${HOME}/.zimrc ]]; then
+    source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+source ${ZIM_HOME}/init.zsh
 
 # ── History ──────────────────────────────────────────────────────
 HISTSIZE=50000
@@ -32,20 +30,33 @@ setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
 setopt HIST_REDUCE_BLANKS
 
-# ── Completion ───────────────────────────────────────────────────
-autoload -Uz compinit && compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu select
-zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
+# ── IBM Bob IDE CLI (bobide) ─────────────────────────────────────
+if [ -d "/Applications/IBM Bob.app/Contents/Resources/app/bin" ]; then
+    export PATH="/Applications/IBM Bob.app/Contents/Resources/app/bin:${PATH}"
+fi
+
+# ── ESC ESC → prepend sudo (replaces OMZ sudo plugin) ────────────
+_sudo_cmd() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N _sudo_cmd
+bindkey "\e\e" _sudo_cmd
 
 # ── Modern CLI Tools ─────────────────────────────────────────────
-eval "$(fzf --zsh)" 2>/dev/null
-eval "$(zoxide init zsh)" 2>/dev/null
+eval "$(fzf --zsh)"        2>/dev/null
+eval "$(zoxide init zsh)"  2>/dev/null
+eval "$(atuin init zsh)"   2>/dev/null  # replaces Ctrl+R with SQLite history
+eval "$(direnv hook zsh)"  2>/dev/null
 
-# Pick Starship + zsh-syntax-highlighting + fzf + bat palettes based
-# on macOS appearance. Re-runs every prompt so a live light↔dark flip
-# swaps all four together.
+# ── Rosé Pine palette switcher ───────────────────────────────────
+# Picks Starship config + zsh-syntax-highlighting + fzf + bat themes
+# based on macOS appearance. Re-runs every prompt so a live
+# light↔dark flip swaps all four together.
 _FZF_OPTS_COMMON="--border='rounded' --preview-window='border-rounded' \
 --prompt='❯ ' --marker='◆' --pointer='▶' \
 --separator='─' --scrollbar='│' --info='right'"
@@ -79,11 +90,7 @@ _palette_switch  # set initial value before first prompt
 eval "$(starship init zsh)" 2>/dev/null
 
 # ── Aliases ──────────────────────────────────────────────────────
-# Note: eza is intentionally NOT aliased over ls. Invoke it by name
-# when icons / git status columns are wanted.
-# bat IS aliased over cat below — configured (BAT_STYLE/BAT_PAGING)
-# to emit plain text with syntax highlighting and no decorations.
-
+# bat is aliased over cat — BAT_STYLE/BAT_PAGING below keep it cat-like
 alias cat="bat"
 
 alias ..="cd .."
@@ -111,16 +118,14 @@ alias c="clear"
 alias dstart='colima start --memory 4 --cpu 2 --disk 30'
 alias dstop='colima stop'
 
-# Memory pressure + top consumers (macOS ps lacks --sort, use sort)
+# Memory pressure + top consumers
 alias mem='memory_pressure && echo "---" && ps aux | sort -nrk 4 | head -10'
 
-# ── Functions ─────────────────────────────────────────────────────────
-# Create directory and cd into it
+# ── Functions ────────────────────────────────────────────────────
 mk() {
     mkdir -p "$1" && cd "$1"
 }
 
-# Clone repo and cd into it
 gclone() {
     local repo="$1"
     local dir="${repo##*/}"
@@ -128,7 +133,6 @@ gclone() {
     git clone "$repo" "$dir" && cd "$dir"
 }
 
-# Stash with auto-message (date + optional note)
 gstash() {
     local msg="stash-$(date +%Y%m%d-%H%M%S)"
     [ -n "$1" ] && msg="$msg-$1"
@@ -139,17 +143,6 @@ gstash() {
 export EDITOR="vim"
 export VISUAL="vim"
 export LANG=en_US.UTF-8
-# BAT_THEME is set by _palette_switch above (per macOS appearance).
-export BAT_STYLE="plain"     # no line numbers, no header — cat-like
-export BAT_PAGING="never"    # don't pipe through less for short files
-
-# ── fnm (Fast Node Manager) ────────────────────────────────────────
-eval "$(fnm env --use-on-cd 2>/dev/null)" || true
-
-# ── PATH ─────────────────────────────────────────────────────────
-export PATH="$HOME/.local/bin:$PATH"
-
-# IBM Bob IDE CLI (`bobide`) — VS Code-fork's `code` equivalent
-if [ -d "/Applications/IBM Bob.app/Contents/Resources/app/bin" ]; then
-    export PATH="/Applications/IBM Bob.app/Contents/Resources/app/bin:$PATH"
-fi
+# BAT_THEME is set by _palette_switch above (per macOS appearance)
+export BAT_STYLE="plain"   # no line numbers, no header — cat-like
+export BAT_PAGING="never"  # don't pipe through less for short files

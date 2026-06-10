@@ -37,11 +37,15 @@ link() {
     fi
 }
 
+HEADLESS=false
+[[ "${1:-}" == "--headless" ]] && HEADLESS=true
+
 echo ""
 echo "  ╔══════════════════════════════════════╗"
 echo "  ║       dotfiles install script        ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
+$HEADLESS && info "headless mode enabled"
 
 # ── First-flight: Xcode CLT + Homebrew ───────────────────────────
 # On a fresh machine neither exists. Install before anything else
@@ -62,6 +66,31 @@ if ! command -v brew &>/dev/null; then
     ok "Homebrew installed"
 fi
 
+# ── Migrations: uninstall replaced tools ─────────────────────────
+# fnm → volta (volta uses shims with no shell hook overhead)
+if brew list fnm &>/dev/null 2>&1; then
+    info "removing fnm (replaced by volta)..."
+    brew uninstall fnm
+    ok "fnm removed"
+fi
+
+# Oh My Zsh → zimfw (zimfw has <10ms startup vs OMZ's 200-400ms)
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    info "removing Oh My Zsh (replaced by zimfw)..."
+    rm -rf "$HOME/.oh-my-zsh"
+    rm -f "$HOME/.zshrc.pre-oh-my-zsh"
+    ok "Oh My Zsh removed"
+fi
+
+# brew-managed zsh plugins → zimfw modules
+for pkg in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
+    if brew list "$pkg" &>/dev/null 2>&1; then
+        info "removing $pkg from brew (now managed by zimfw)..."
+        brew uninstall "$pkg"
+        ok "$pkg removed"
+    fi
+done
+
 # ── Homebrew bundle (formulae, casks, fonts) ─────────────────────
 # Brewfile tracks everything installed. `brew bundle install` is
 # idempotent: anything already present is skipped automatically.
@@ -79,28 +108,52 @@ else
     warn "no Brewfile found at $DOTFILES/Brewfile"
 fi
 
-# Also copy any .ttf files from dotfiles/fonts directory (local overrides)
-FONT_SRC="$DOTFILES/fonts"
-FONT_DST="$HOME/Library/Fonts"
-mkdir -p "$FONT_DST"
-if [ -d "$FONT_SRC" ]; then
-    count=0
-    for font in "$FONT_SRC"/*.ttf; do
-        if [ -f "$font" ]; then
-            cp "$font" "$FONT_DST/" && (( count++ )) || true
-        fi
-    done
-    if [ "$count" -gt 0 ]; then
-        ok "copied $count local fonts"
+# ── zimfw ────────────────────────────────────────────────────────
+# Modules are defined in ~/.zimrc (symlinked from dotfiles/zsh/.zimrc).
+# The .zshrc self-bootstraps on first open, but we pre-fetch here so
+# the shell is fully configured immediately after install.
+ZIM_HOME="$HOME/.zim"
+if [ ! -f "$ZIM_HOME/zimfw.zsh" ]; then
+    info "installing zimfw..."
+    mkdir -p "$ZIM_HOME"
+    if curl -fsSL -o "$ZIM_HOME/zimfw.zsh" \
+            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh; then
+        ok "zimfw downloaded"
+    else
+        warn "zimfw download failed — shell plugins will install on first shell open"
     fi
 else
-    warn "fonts directory not found"
+    ok "zimfw already present"
 fi
 
-# ── Rosé Pine for bat (main + dawn) ────────────────────────────
-# Upstream lives at rose-pine/tm-theme/dist. _palette_switch in
-# .zshrc swaps BAT_THEME between "Rose Pine" and "Rose Pine Dawn"
-# based on macOS appearance, so both files need to be present.
+# ── Python 3.12 via uv ───────────────────────────────────────────
+# uv replaces pyenv + pip + venv + pipx in a single binary.
+# `uv python install` downloads pre-built CPython (seconds, not minutes).
+if command -v uv &>/dev/null; then
+    if ! uv python list 2>/dev/null | grep -q "3\.12"; then
+        info "installing Python 3.12 via uv..."
+        uv python install 3.12 2>&1 | tail -3 || warn "uv python install had errors"
+        ok "Python 3.12 installed"
+    else
+        ok "Python 3.12 already installed"
+    fi
+fi
+
+# ── Node.js LTS via volta ────────────────────────────────────────
+# volta installs shims — no eval in .zshrc, no per-shell overhead.
+if command -v volta &>/dev/null; then
+    if ! volta list 2>/dev/null | grep -qi "node"; then
+        info "installing Node.js LTS via volta..."
+        volta install node@lts 2>&1 | tail -3 || warn "volta node install had errors"
+        ok "Node.js LTS installed"
+    else
+        ok "Node.js already installed via volta"
+    fi
+fi
+
+# ── Rosé Pine for bat (main + dawn) ─────────────────────────────
+# _palette_switch in .zshrc swaps BAT_THEME between "Rose Pine" and
+# "Rose Pine Dawn" based on macOS appearance, so both must be present.
 if command -v bat &>/dev/null; then
     info "setting up bat themes..."
     BAT_THEMES="$(bat --config-dir)/themes"
@@ -128,7 +181,7 @@ else
     warn "bat not on PATH — skipping bat theme setup"
 fi
 
-# ── Rosé Pine for zsh-syntax-highlighting ─────────────────────
+# ── Rosé Pine for zsh-syntax-highlighting ────────────────────────
 # Two palettes; .zshrc precmd hook picks the right one based on the
 # macOS appearance, mirroring the Starship dawn/main split.
 info "setting up zsh-syntax-highlighting themes..."
@@ -144,12 +197,37 @@ info "linking configs..."
 
 link "$DOTFILES/zsh/.zshrc"              "$HOME/.zshrc"
 link "$DOTFILES/zsh/.zprofile"           "$HOME/.zprofile"
+link "$DOTFILES/zsh/.zimrc"              "$HOME/.zimrc"
 link "$DOTFILES/starship/starship-dawn.toml"   "$HOME/.config/starship-dawn.toml"
 link "$DOTFILES/starship/starship-main.toml"   "$HOME/.config/starship-main.toml"
 link "$DOTFILES/ghostty/config"          "$HOME/.config/ghostty/config"
 link "$DOTFILES/yabai/yabairc"           "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
 link "$DOTFILES/bob/settings.json"       "$HOME/Library/Application Support/IBM Bob/User/settings.json"
+link "$DOTFILES/bob/settings.json"       "$HOME/Library/Application Support/Code/User/settings.json"
+
+# ── zimfw modules ────────────────────────────────────────────────
+# Install modules now that .zimrc is symlinked. Subsequent runs are
+# instant (zimfw skips modules that are already up to date).
+if [ -f "$ZIM_HOME/zimfw.zsh" ] && [ -f "$HOME/.zimrc" ]; then
+    info "installing zimfw modules..."
+    zsh "$ZIM_HOME/zimfw.zsh" install 2>/dev/null \
+        && ok "zimfw modules installed" \
+        || warn "zimfw module install had errors — will retry on next shell open"
+fi
+
+# ── atuin (shell history) ────────────────────────────────────────
+# atuin replaces Ctrl+R with SQLite-backed history; optionally syncs
+# across machines. On first install, import existing zsh history.
+if command -v atuin &>/dev/null; then
+    if [ ! -f "$HOME/.local/share/atuin/history.db" ]; then
+        info "initializing atuin (importing zsh history)..."
+        atuin import zsh 2>/dev/null || true
+        ok "atuin initialized"
+    else
+        ok "atuin already initialized"
+    fi
+fi
 
 # ── Bob (VS Code fork) extensions ────────────────────────────────
 # Bob ships `bobide` as its CLI. It may not be on PATH until the
@@ -174,8 +252,6 @@ bob_install_extensions() {
             (( failed++ )) || true
         fi
     done < "$DOTFILES/bob/extensions.txt"
-    # NB: bare `[ -gt 0 ] && warn` returns non-zero when failed=0,
-    # which trips `set -e` on the function call. Use an explicit `if`.
     if [ "$failed" -gt 0 ]; then
         warn "Bob: $failed extension(s) failed to install"
     fi
@@ -186,6 +262,40 @@ if [ -x "$BOBIDE_BIN" ]; then
     bob_install_extensions
 else
     warn "bobide CLI not found — install IBM Bob first, then re-run"
+fi
+
+# ── VS Code extensions ───────────────────────────────────────────
+# Settings are shared with Bob (symlinked above). Extensions use the
+# same list; both IDEs are VS Code forks with the same marketplace.
+CODE_BIN="$(command -v code 2>/dev/null || true)"
+[ -z "$CODE_BIN" ] && CODE_BIN="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+
+vscode_install_extensions() {
+    info "installing VS Code extensions..."
+    local failed=0
+    while IFS= read -r line; do
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${line// }" ]] && continue
+        local ext="${line%%#*}"
+        ext="${ext// /}"
+        [[ -z "$ext" ]] && continue
+        if "$CODE_BIN" --install-extension "$ext" --force &>/dev/null; then
+            ok "  $ext"
+        else
+            warn "  $ext (failed — skipped)"
+            (( failed++ )) || true
+        fi
+    done < "$DOTFILES/bob/extensions.txt"
+    if [ "$failed" -gt 0 ]; then
+        warn "VS Code: $failed extension(s) failed to install"
+    fi
+}
+
+if [ -x "$CODE_BIN" ]; then
+    info "VS Code detected: $CODE_BIN"
+    vscode_install_extensions
+else
+    warn "code CLI not found — install VS Code or run 'Install code command in PATH' from inside VS Code"
 fi
 
 # ── Firefox userChrome ───────────────────────────────────────────
@@ -227,8 +337,8 @@ else
 fi
 
 # ── npm global packages ──────────────────────────────────────────
-# Syncs CLI tools installed globally via npm (e.g. bobshell).
-# Requires a Node version active via fnm.
+# Syncs CLI tools installed globally via npm. Requires a Node version
+# active via volta (`volta install node@lts` sets the default).
 if command -v npm &>/dev/null && [ -f "$DOTFILES/npm/globals.txt" ]; then
     info "syncing global npm packages..."
     installed="$(npm ls -g --depth=0 --parseable 2>/dev/null | xargs -n1 basename 2>/dev/null || true)"
@@ -245,20 +355,37 @@ if command -v npm &>/dev/null && [ -f "$DOTFILES/npm/globals.txt" ]; then
         fi
     done < "$DOTFILES/npm/globals.txt"
 elif ! command -v npm &>/dev/null; then
-    warn "npm not on PATH — run \`fnm install --lts && fnm default lts-latest\` first, then re-run"
+    warn "npm not on PATH — run \`volta install node@lts\` first, then re-run"
 fi
 
 # ── macOS app defaults ───────────────────────────────────────────
-# Disable macOS Resume for Ghostty so new launches don't restore the
-# previous working directory / surfaces. Ghostty's own
-# window-save-state=never is overridden by this NSGlobal flag.
 info "applying macOS app defaults..."
 defaults write com.mitchellh.ghostty NSQuitAlwaysKeepsWindows -bool false
 ok "Ghostty: macOS Resume disabled"
 
+# ── Headless macOS settings ──────────────────────────────────────
+# Run with --headless on machines with no display (e.g. Mac Mini server).
+# Disables sleep, screensaver, and Spotlight to reduce resource use
+# and prevent the machine from becoming unreachable over SSH.
+if $HEADLESS; then
+    info "applying headless macOS settings..."
+    sudo pmset -a sleep 0
+    sudo pmset -a disksleep 0
+    sudo pmset -a hibernatemode 0
+    sudo pmset -a autopoweroff 0
+    sudo pmset -a womp 1          # wake on network activity
+    sudo pmset -a displaysleep 0
+    defaults write com.apple.screensaver idleTime 0
+    defaults -currentHost write com.apple.screensaver idleTime 0
+    sudo mdutil -i off / 2>/dev/null || warn "mdutil: re-run with sudo if Spotlight disable failed"
+    ok "headless: sleep/screensaver/Spotlight disabled"
+fi
+
 # ── Start services ───────────────────────────────────────────────
 info "starting services..."
-yabai --restart-service 2>/dev/null || true
+if ! $HEADLESS; then
+    yabai --restart-service 2>/dev/null || true
+fi
 
 echo ""
 ok "done! restart your terminal or run: source ~/.zshrc"

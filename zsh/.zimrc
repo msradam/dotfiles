@@ -1,0 +1,14 @@
+# Sets sane Zsh built-in environment options
+zmodule environment
+# Applies correct bindkeys for input events
+zmodule input
+# Utility aliases and functions (e.g. mkcd, mkpdf)
+zmodule utility
+# Tab completion — calls compinit with caching
+zmodule completion
+# Fish-like autosuggestions
+zmodule zsh-users/zsh-autosuggestions
+# Additional completion definitions
+zmodule zsh-users/zsh-completions --fpath src
+# Fish-like syntax highlighting — must be last
+zmodule zsh-users/zsh-syntax-highlighting
