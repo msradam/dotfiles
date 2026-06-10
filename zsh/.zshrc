@@ -50,7 +50,7 @@ bindkey "\e\e" _sudo_cmd
 # ── Modern CLI Tools ─────────────────────────────────────────────
 eval "$(fzf --zsh)"        2>/dev/null
 eval "$(zoxide init zsh)"  2>/dev/null
-eval "$(atuin init zsh)"   2>/dev/null  # replaces Ctrl+R with SQLite history
+eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null  # Ctrl+R only; up arrow stays normal
 eval "$(direnv hook zsh)"  2>/dev/null
 
 # ── Rosé Pine palette switcher ───────────────────────────────────
