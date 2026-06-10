@@ -368,17 +368,19 @@ ok "Ghostty: macOS Resume disabled"
 # Disables sleep, screensaver, and Spotlight to reduce resource use
 # and prevent the machine from becoming unreachable over SSH.
 if $HEADLESS; then
-    info "applying headless macOS settings..."
-    sudo pmset -a sleep 0
-    sudo pmset -a disksleep 0
-    sudo pmset -a hibernatemode 0
-    sudo pmset -a autopoweroff 0
-    sudo pmset -a womp 1          # wake on network activity
-    sudo pmset -a displaysleep 0
-    defaults write com.apple.screensaver idleTime 0
-    defaults -currentHost write com.apple.screensaver idleTime 0
-    sudo mdutil -i off / 2>/dev/null || warn "mdutil: re-run with sudo if Spotlight disable failed"
-    ok "headless: sleep/screensaver/Spotlight disabled"
+    info "applying headless macOS settings (requires interactive sudo)..."
+    # These pmset flags prevent the machine from sleeping or hibernating,
+    # keeping it reachable over SSH after reboots.
+    sudo pmset -a sleep 0       || warn "pmset sleep: needs interactive sudo"
+    sudo pmset -a disksleep 0   || warn "pmset disksleep: needs interactive sudo"
+    sudo pmset -a hibernatemode 0 || warn "pmset hibernatemode: needs interactive sudo"
+    sudo pmset -a autopoweroff 0  || warn "pmset autopoweroff: needs interactive sudo"
+    sudo pmset -a womp 1           # wake on network activity
+    sudo pmset -a displaysleep 0  || warn "pmset displaysleep: needs interactive sudo"
+    defaults write com.apple.screensaver idleTime 0 || true
+    defaults -currentHost write com.apple.screensaver idleTime 0 || true
+    sudo mdutil -i off / 2>/dev/null || warn "mdutil: needs interactive sudo for Spotlight disable"
+    ok "headless: sleep/screensaver/Spotlight settings applied (check skips above)"
 fi
 
 # ── Start services ───────────────────────────────────────────────
