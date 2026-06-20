@@ -73,6 +73,10 @@ brew "lazygit"
 brew "lf"
 # Blazing fast terminal file manager written in Rust (async I/O)
 brew "yazi"
+# Hyperedited terminal workspace / multiplexer (layouts, floating panes)
+brew "zellij"
+# Hyperextensible Vim-based text editor (LazyVim distro config in nvim/)
+brew "neovim"
 # NetworKit is an OS-toolkit for large-scale network analysis
 brew "libnetworkit"
 # C library SSHv1/SSHv2 client and server protocols

@@ -104,6 +104,11 @@ alias reload="source ~/.zshrc"
 alias dots="cd ~/dotfiles"
 alias py="python3"
 alias c="clear"
+alias vi="nvim"
+
+# TUI IDE: editor + neo-tree + shell + Claude Code, in one Zellij workspace
+alias ide="zellij --layout ide"
+alias zj="zellij"
 
 # Colima (Docker backend) with 16GB-machine defaults
 alias dstart='colima start --memory 4 --cpu 2 --disk 30'
@@ -142,8 +147,8 @@ tw() {
 }
 
 # ── Environment ──────────────────────────────────────────────────
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 export LANG=en_US.UTF-8
 # BAT_THEME is set by _palette_switch above (per macOS appearance).
 export BAT_STYLE="plain"     # no line numbers, no header — cat-like

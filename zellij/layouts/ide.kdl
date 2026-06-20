@@ -1,0 +1,21 @@
+// IDE layout: editor (with neo-tree file browser) left, shell + Claude
+// agent stacked right. Launch with `ide` (alias) or `zellij --layout ide`.
+//
+// claudecode.nvim runs a WebSocket server inside nvim; the `claude` CLI
+// in the agent pane auto-connects, so its proposed edits open as diffs
+// in the editor (accept <leader>aa / reject <leader>ad).
+layout {
+    pane size=1 borderless=true {
+        plugin location="zellij:tab-bar"
+    }
+    pane split_direction="vertical" {
+        pane size="70%" name="editor" command="nvim"
+        pane size="30%" split_direction="horizontal" {
+            pane name="shell"
+            pane name="agent" command="claude"
+        }
+    }
+    pane size=2 borderless=true {
+        plugin location="zellij:status-bar"
+    }
+}

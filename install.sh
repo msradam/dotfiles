@@ -218,6 +218,9 @@ link "$DOTFILES/starship/starship-latte.toml"  "$HOME/.config/starship-latte.tom
 link "$DOTFILES/starship/starship-mocha.toml"  "$HOME/.config/starship-mocha.toml"
 link "$DOTFILES/ghostty/config"           "$HOME/.config/ghostty/config"
 link "$DOTFILES/zed/settings.json"        "$HOME/.config/zed/settings.json"
+link "$DOTFILES/nvim"                     "$HOME/.config/nvim"
+link "$DOTFILES/zellij/config.kdl"        "$HOME/.config/zellij/config.kdl"
+link "$DOTFILES/zellij/layouts/ide.kdl"   "$HOME/.config/zellij/layouts/ide.kdl"
 link "$DOTFILES/yabai/yabairc"            "$HOME/.config/yabai/yabairc"
 link "$DOTFILES/git/.gitconfig"           "$HOME/.gitconfig"
 
