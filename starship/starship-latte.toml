@@ -1,4 +1,4 @@
-# Rosé Pine Dawn variant — light palette.
+# Catppuccin Latte — light palette.
 add_newline = true
 
 format = """
@@ -14,7 +14,7 @@ $cmd_duration\
 $line_break\
 $character"""
 
-palette = "rose_pine_dawn"
+palette = "catppuccin_latte"
 
 [directory]
 style = "pine bold"
@@ -76,19 +76,19 @@ success_symbol = "[❯](iris)"
 error_symbol = "[❯](love)"
 vimcmd_symbol = "[❮](foam)"
 
-[palettes.rose_pine_dawn]
-base           = "#faf4ed"
-surface        = "#fffaf3"
-overlay        = "#f2e9e1"
-muted          = "#9893a5"
-subtle         = "#797593"
-text           = "#575279"
-love           = "#b4637a"
-gold           = "#ea9d34"
-rose           = "#d7827e"
-pine           = "#286983"
-foam           = "#56949f"
-iris           = "#907aa9"
-highlight_low  = "#f4ede8"
-highlight_med  = "#dfdad9"
-highlight_high = "#cecacd"
+[palettes.catppuccin_latte]
+base           = "#eff1f5"
+surface        = "#ccd0da"
+overlay        = "#bcc0cc"
+muted          = "#9ca0b0"
+subtle         = "#6c6f85"
+text           = "#4c4f69"
+love           = "#d20f39"
+gold           = "#df8e1d"
+rose           = "#dc8a78"
+pine           = "#40a02b"
+foam           = "#179299"
+iris           = "#8839ef"
+highlight_low  = "#e6e9ef"
+highlight_med  = "#bcc0cc"
+highlight_high = "#acb0be"

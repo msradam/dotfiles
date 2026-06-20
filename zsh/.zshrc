@@ -1,13 +1,3 @@
-# ── Completion styles (must precede zimfw/compinit) ──────────────
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu select
-zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
-
-# ── Volta (Node.js) — must be on PATH before zimfw sees npm completions
-export VOLTA_HOME="${HOME}/.volta"
-export PATH="${VOLTA_HOME}/bin:${HOME}/.local/bin:${PATH}"
-
 # ── zimfw ─────────────────────────────────────────────────────────
 # Self-bootstraps on fresh machines; modules listed in ~/.zimrc
 ZIM_HOME="${HOME}/.zim"
@@ -20,22 +10,13 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${HOME}/.zimrc ]]; then
 fi
 source ${ZIM_HOME}/init.zsh
 
-# ── History ──────────────────────────────────────────────────────
-HISTSIZE=50000
-SAVEHIST=50000
-HISTFILE=~/.zsh_history
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_REDUCE_BLANKS
+# ── Completion styles ─────────────────────────────────────────────
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+zstyle ':completion:*:descriptions' format '%F{blue}── %d ──%f'
 
-# ── IBM Bob IDE CLI (bobide) ─────────────────────────────────────
-if [ -d "/Applications/IBM Bob.app/Contents/Resources/app/bin" ]; then
-    export PATH="/Applications/IBM Bob.app/Contents/Resources/app/bin:${PATH}"
-fi
-
-# ── ESC ESC → prepend sudo (replaces OMZ sudo plugin) ────────────
+# ── sudo widget (ESC ESC toggles a leading sudo) ─────────────────
 _sudo_cmd() {
     [[ -z $BUFFER ]] && zle up-history
     if [[ $BUFFER == sudo\ * ]]; then
@@ -47,13 +28,23 @@ _sudo_cmd() {
 zle -N _sudo_cmd
 bindkey "\e\e" _sudo_cmd
 
+# ── History ──────────────────────────────────────────────────────
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_REDUCE_BLANKS
+
 # ── Modern CLI Tools ─────────────────────────────────────────────
 eval "$(fzf --zsh)"        2>/dev/null
 eval "$(zoxide init zsh)"  2>/dev/null
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null  # Ctrl+R only; up arrow stays normal
 eval "$(direnv hook zsh)"  2>/dev/null
 
-# ── Rosé Pine palette switcher ───────────────────────────────────
+# ── Catppuccin palette switcher ──────────────────────────────────
 # Picks Starship config + zsh-syntax-highlighting + fzf + bat themes
 # based on macOS appearance. Re-runs every prompt so a live
 # light↔dark flip swaps all four together.
@@ -63,25 +54,25 @@ _FZF_OPTS_COMMON="--border='rounded' --preview-window='border-rounded' \
 
 _palette_switch() {
     if defaults read -g AppleInterfaceStyle &>/dev/null; then
-        export STARSHIP_CONFIG="$HOME/.config/starship-main.toml"
-        export BAT_THEME="Rose Pine"
+        export STARSHIP_CONFIG="$HOME/.config/starship-mocha.toml"
+        export BAT_THEME="Catppuccin Mocha"
         export FZF_DEFAULT_OPTS=" \
---color=bg+:#26233a,bg:#191724,spinner:#ebbcba,hl:#eb6f92 \
---color=fg:#e0def4,header:#eb6f92,info:#c4a7e7,pointer:#ebbcba \
---color=marker:#c4a7e7,fg+:#e0def4,prompt:#c4a7e7,hl+:#eb6f92 \
---color=selected-bg:#403d52 \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
 $_FZF_OPTS_COMMON"
-        source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-main.zsh" 2>/dev/null
+        source "$HOME/.zsh/catppuccin-zsh-syntax-highlighting-mocha.zsh" 2>/dev/null
     else
-        export STARSHIP_CONFIG="$HOME/.config/starship-dawn.toml"
-        export BAT_THEME="Rose Pine Dawn"
+        export STARSHIP_CONFIG="$HOME/.config/starship-latte.toml"
+        export BAT_THEME="Catppuccin Latte"
         export FZF_DEFAULT_OPTS=" \
---color=bg+:#f2e9e1,bg:#faf4ed,spinner:#d7827e,hl:#b4637a \
---color=fg:#575279,header:#b4637a,info:#907aa9,pointer:#d7827e \
---color=marker:#907aa9,fg+:#575279,prompt:#907aa9,hl+:#b4637a \
---color=selected-bg:#dfdad9 \
+--color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
+--color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
+--color=marker:#7287fd,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
+--color=selected-bg:#bcc0cc \
 $_FZF_OPTS_COMMON"
-        source "$HOME/.zsh/rose-pine-zsh-syntax-highlighting-dawn.zsh" 2>/dev/null
+        source "$HOME/.zsh/catppuccin-zsh-syntax-highlighting-latte.zsh" 2>/dev/null
     fi
 }
 autoload -U add-zsh-hook
@@ -139,10 +130,34 @@ gstash() {
     git stash push -m "$msg"
 }
 
+# Typst live preview: compile + watch a .typ, open the PDF in Skim.
+# Skim auto-reloads on disk change (SKAutoReloadFileUpdate), so this
+# gives a real native PDF preview beside the editor. Ctrl-C to stop.
+tw() {
+    local src="${1:?usage: tw file.typ}"
+    local pdf="${src%.typ}.pdf"
+    typst compile "$src" "$pdf" || return 1
+    open -a Skim "$pdf"
+    typst watch "$src" "$pdf"
+}
+
 # ── Environment ──────────────────────────────────────────────────
 export EDITOR="vim"
 export VISUAL="vim"
 export LANG=en_US.UTF-8
-# BAT_THEME is set by _palette_switch above (per macOS appearance)
-export BAT_STYLE="plain"   # no line numbers, no header — cat-like
-export BAT_PAGING="never"  # don't pipe through less for short files
+# BAT_THEME is set by _palette_switch above (per macOS appearance).
+export BAT_STYLE="plain"     # no line numbers, no header — cat-like
+export BAT_PAGING="never"    # don't pipe through less for short files
+
+# ── fnm (Fast Node Manager) ──────────────────────────────────────
+eval "$(fnm env --use-on-cd 2>/dev/null)" || true
+
+# ── PATH ─────────────────────────────────────────────────────────
+export PATH="$HOME/.local/bin:$PATH"
+
+# bun completions
+[ -s "/Users/amsrahman/.bun/_bun" ] && source "/Users/amsrahman/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

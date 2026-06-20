@@ -3,7 +3,7 @@
 
 # ── Theme ─────────────────────────────────────────────────────────
 # Auto-switch with macOS appearance.
-theme = light:Rose Pine Dawn,dark:Rose Pine
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
 window-theme = auto
 
 # ── Font ──────────────────────────────────────────────────────────

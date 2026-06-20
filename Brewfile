@@ -3,12 +3,16 @@ tap "koekeishiya/formulae"
 tap "theboredteam/boring-notch"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
+# Magical shell history (SQLite-backed, fuzzy search, sync)
+brew "atuin"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Modern TUI system monitor
 brew "btop"
 # Cross-platform make
 brew "cmake"
+# In-process SQL OLAP database (analytics on Parquet/CSV/Arrow)
+brew "duckdb"
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
 # TIFF library and utilities
@@ -59,12 +63,16 @@ brew "go"
 brew "hf", link: false
 # Command-line JSON processor
 brew "jq"
+# Git-compatible VCS with anonymous branches and first-class undo
+brew "jujutsu"
 # Modern load testing tool, using Go and JavaScript
 brew "k6"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Terminal file manager
 brew "lf"
+# Blazing fast terminal file manager written in Rust (async I/O)
+brew "yazi"
 # NetworKit is an OS-toolkit for large-scale network analysis
 brew "libnetworkit"
 # C library SSHv1/SSHv2 client and server protocols
@@ -121,8 +129,8 @@ brew "typst"
 brew "uv"
 # Your CLI home video recorder
 brew "vhs"
-# Manage multiple Node.js versions (replaces fnm — shim-based, no shell hook overhead)
-brew "volta"
+# Fast and simple Node.js version manager
+brew "fnm"
 # Ogg Vorbis CODEC tools
 brew "vorbis-tools"
 # Internet file retriever
@@ -137,8 +145,6 @@ brew "yaml-cpp"
 brew "yq"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
-# Shell history with SQLite backend and optional cross-machine sync
-brew "atuin"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Build, manage and test your Auth0 integrations from the command line
@@ -157,6 +163,8 @@ cask "audacity"
 cask "basictex"
 # Open-source Dynamic Island for the MacBook notch
 cask "theboredteam/boring-notch/boring-notch"
+# Git-friendly, offline-first API client (collections live in your repo)
+cask "bruno"
 # E-books management software
 cask "calibre"
 # Anthropic's official Claude AI desktop app
@@ -216,18 +224,18 @@ cask "slack"
 cask "slack-cli"
 # To-do list
 cask "todoist-app"
-# Code editor
-cask "visual-studio-code"
+# PDF reader that auto-reloads on disk change (Typst/LaTeX live preview)
+cask "skim"
 # Multimedia player
 cask "vlc"
+# High-performance, Rust-native code editor with built-in AI agent panel
+cask "zed"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Utility to hide the notch by blacking out the menu bar
 cask "topnotch"
 # Native Google Messages client for Mac (Tunabelly Software)
 mas "Texty for Google Messages", id: 1538996043
-# IDE (VS Code fork) — install manually from IBM internal distribution.
-# Settings + extensions are managed by install.sh from dotfiles/bob/.
 go "golang.org/x/tools/cmd/deadcode"
 go "golang.org/dl/go1.24.0"
 go "github.com/golangci/golangci-lint/cmd/golangci-lint"

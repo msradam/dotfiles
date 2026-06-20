@@ -1,68 +1,68 @@
-/* Rosé Pine for Firefox — auto-switches with system appearance.
- * Canonical palette values from rosepinetheme.com.
- * Main (dark) when system is dark; Dawn (light) when system is light. */
+/* Catppuccin for Firefox — auto-switches with system appearance.
+ * Canonical palette values from catppuccin.com/palette.
+ * Latte (light) when system is light; Mocha (dark) when system is dark. */
 
-/* ── Dawn (light) palette ──────────────────────────────────────── */
+/* ── Latte (light) palette ─────────────────────────────────────── */
 @media (prefers-color-scheme: light) {
   :root {
-    --rp-base:    #faf4ed;
-    --rp-surface: #fffaf3;
-    --rp-overlay: #f2e9e1;
-    --rp-hl-low:  #f4ede8;
-    --rp-hl-med:  #dfdad9;
-    --rp-hl-high: #cecacd;
-    --rp-muted:   #9893a5;
-    --rp-subtle:  #797593;
-    --rp-text:    #575279;
-    --rp-iris:    #907aa9;
-    --rp-pine:    #286983;
-    --rp-foam:    #56949f;
-    --rp-rose:    #d7827e;
-    --rp-love:    #b4637a;
-    --rp-gold:    #ea9d34;
+    --ctp-base:    #eff1f5;
+    --ctp-surface: #e6e9ef;
+    --ctp-overlay: #ccd0da;
+    --ctp-hl-low:  #e6e9ef;
+    --ctp-hl-med:  #bcc0cc;
+    --ctp-hl-high: #acb0be;
+    --ctp-muted:   #9ca0b0;
+    --ctp-subtle:  #6c6f85;
+    --ctp-text:    #4c4f69;
+    --ctp-iris:    #8839ef;
+    --ctp-pine:    #40a02b;
+    --ctp-foam:    #179299;
+    --ctp-rose:    #dc8a78;
+    --ctp-love:    #d20f39;
+    --ctp-gold:    #df8e1d;
   }
 }
 
-/* ── Main (dark) palette ───────────────────────────────────────── */
+/* ── Mocha (dark) palette ──────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --rp-base:    #191724;
-    --rp-surface: #1f1d2e;
-    --rp-overlay: #26233a;
-    --rp-hl-low:  #21202e;
-    --rp-hl-med:  #403d52;
-    --rp-hl-high: #524f67;
-    --rp-muted:   #6e6a86;
-    --rp-subtle:  #908caa;
-    --rp-text:    #e0def4;
-    --rp-iris:    #c4a7e7;
-    --rp-pine:    #31748f;
-    --rp-foam:    #9ccfd8;
-    --rp-rose:    #ebbcba;
-    --rp-love:    #eb6f92;
-    --rp-gold:    #f6c177;
+    --ctp-base:    #1e1e2e;
+    --ctp-surface: #181825;
+    --ctp-overlay: #313244;
+    --ctp-hl-low:  #181825;
+    --ctp-hl-med:  #45475a;
+    --ctp-hl-high: #585b70;
+    --ctp-muted:   #6c7086;
+    --ctp-subtle:  #9399b2;
+    --ctp-text:    #cdd6f4;
+    --ctp-iris:    #cba6f7;
+    --ctp-pine:    #a6e3a1;
+    --ctp-foam:    #94e2d5;
+    --ctp-rose:    #f5e0dc;
+    --ctp-love:    #f38ba8;
+    --ctp-gold:    #f9e2af;
   }
 }
 
 /* ── Map palette to Firefox theme tokens ───────────────────────── */
 :root {
-  --toolbar-bgcolor:                      var(--rp-surface) !important;
-  --toolbar-color:                        var(--rp-text)    !important;
-  --tabs-border-color:                    var(--rp-hl-high) !important;
-  --tab-selected-bgcolor:                 var(--rp-overlay) !important;
-  --tab-selected-color:                   var(--rp-text)    !important;
-  --lwt-toolbar-field-background-color:   var(--rp-overlay) !important;
-  --lwt-toolbar-field-focus:              var(--rp-base)    !important;
-  --lwt-toolbar-field-color:              var(--rp-text)    !important;
-  --lwt-toolbar-field-focus-color:        var(--rp-text)    !important;
-  --toolbar-field-background-color:       var(--rp-overlay) !important;
-  --toolbar-field-focus-background-color: var(--rp-base)    !important;
-  --toolbar-field-color:                  var(--rp-text)    !important;
-  --toolbar-field-focus-color:            var(--rp-text)    !important;
-  --urlbar-box-text-color:                var(--rp-text)    !important;
-  --lwt-sidebar-background-color:         var(--rp-surface) !important;
-  --lwt-toolbarbutton-hover-background:   var(--rp-hl-low)  !important;
-  --lwt-toolbarbutton-active-background:  var(--rp-hl-med)  !important;
+  --toolbar-bgcolor:                      var(--ctp-surface) !important;
+  --toolbar-color:                        var(--ctp-text)    !important;
+  --tabs-border-color:                    var(--ctp-hl-high) !important;
+  --tab-selected-bgcolor:                 var(--ctp-overlay) !important;
+  --tab-selected-color:                   var(--ctp-text)    !important;
+  --lwt-toolbar-field-background-color:   var(--ctp-overlay) !important;
+  --lwt-toolbar-field-focus:              var(--ctp-base)    !important;
+  --lwt-toolbar-field-color:              var(--ctp-text)    !important;
+  --lwt-toolbar-field-focus-color:        var(--ctp-text)    !important;
+  --toolbar-field-background-color:       var(--ctp-overlay) !important;
+  --toolbar-field-focus-background-color: var(--ctp-base)    !important;
+  --toolbar-field-color:                  var(--ctp-text)    !important;
+  --toolbar-field-focus-color:            var(--ctp-text)    !important;
+  --urlbar-box-text-color:                var(--ctp-text)    !important;
+  --lwt-sidebar-background-color:         var(--ctp-surface) !important;
+  --lwt-toolbarbutton-hover-background:   var(--ctp-hl-low)  !important;
+  --lwt-toolbarbutton-active-background:  var(--ctp-hl-med)  !important;
 }
 
 #main-window,
@@ -71,8 +71,8 @@
 #TabsToolbar,
 #PersonalToolbar,
 #sidebar-box {
-  background-color: var(--rp-surface) !important;
-  color: var(--rp-text) !important;
+  background-color: var(--ctp-surface) !important;
+  color: var(--ctp-text) !important;
 }
 
 #urlbar-background,
@@ -81,12 +81,12 @@
 menupopup,
 tooltip,
 #findbar-textbox {
-  background-color: var(--rp-overlay) !important;
-  color: var(--rp-text) !important;
+  background-color: var(--ctp-overlay) !important;
+  color: var(--ctp-text) !important;
 }
 
 #urlbar .urlbar-input,
 #urlbar-input,
 #searchbar .searchbar-textbox {
-  color: var(--rp-text) !important;
+  color: var(--ctp-text) !important;
 }
