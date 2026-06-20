@@ -39,10 +39,10 @@ setopt INC_APPEND_HISTORY
 setopt HIST_REDUCE_BLANKS
 
 # ── Modern CLI Tools ─────────────────────────────────────────────
-eval "$(fzf --zsh)"        2>/dev/null
-eval "$(zoxide init zsh)"  2>/dev/null
-eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null  # Ctrl+R only; up arrow stays normal
-eval "$(direnv hook zsh)"  2>/dev/null
+command -v fzf    >/dev/null && eval "$(fzf --zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v atuin  >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"  # Ctrl+R only; up arrow stays normal
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 # ── Catppuccin palette switcher ──────────────────────────────────
 # Picks Starship config + zsh-syntax-highlighting + fzf + bat themes

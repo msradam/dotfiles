@@ -83,7 +83,11 @@ fi
 for pkg in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
     if brew list "$pkg" &>/dev/null 2>&1; then
         info "removing $pkg from brew (now a zimfw module)..."
-        brew uninstall --ignore-dependencies "$pkg" && ok "$pkg removed"
+        if brew uninstall --ignore-dependencies "$pkg"; then
+            ok "$pkg removed"
+        else
+            warn "$pkg uninstall failed — continuing"
+        fi
     fi
 done
 
@@ -116,6 +120,12 @@ fi
 # idempotent: anything already present is skipped automatically.
 info "syncing Brewfile (skips already-installed)..."
 if [ -f "$DOTFILES/Brewfile" ]; then
+    # Newer Homebrew refuses to load formulae from untrusted third-party
+    # taps, which aborts `brew bundle`. Trust the taps the Brewfile
+    # declares so the sync runs unattended.
+    grep -E '^tap "' "$DOTFILES/Brewfile" | sed -E 's/^tap "([^"]+)".*/\1/' | while read -r t; do
+        brew trust "$t" &>/dev/null || true
+    done
     # Don't abort the whole installer on partial Brewfile failures
     # (e.g. uv-tool conflicts with pre-existing pip --user binaries).
     # Symlinks and downstream steps must still run.
