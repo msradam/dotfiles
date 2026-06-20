@@ -106,8 +106,6 @@ alias py="python3"
 alias c="clear"
 alias vi="nvim"
 
-# TUI IDE: editor + neo-tree + shell + Claude Code, in one Zellij workspace
-alias ide="zellij --layout ide"
 alias zj="zellij"
 
 # Colima (Docker backend) with 16GB-machine defaults
@@ -133,6 +131,18 @@ gstash() {
     local msg="stash-$(date +%Y%m%d-%H%M%S)"
     [ -n "$1" ] && msg="$msg-$1"
     git stash push -m "$msg"
+}
+
+# TUI IDE: editor + neo-tree + shell + Claude Code in one Zellij workspace.
+# `ide` opens the current dir; `ide <path>` or `ide <zoxide-query>` opens
+# there (all panes inherit the cwd). Run from a plain shell, not inside zellij.
+ide() {
+    local dir="${1:-.}"
+    if [ ! -d "$dir" ] && command -v zoxide >/dev/null; then
+        dir="$(zoxide query "$1" 2>/dev/null)" || { echo "ide: no match for '$1'" >&2; return 1; }
+    fi
+    builtin cd "$dir" || return 1
+    zellij --layout ide
 }
 
 # Typst live preview: compile + watch a .typ, open the PDF in Skim.
