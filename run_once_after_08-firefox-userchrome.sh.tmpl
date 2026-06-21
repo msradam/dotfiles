@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+FIREFOX_DIR="$HOME/Library/Application Support/Firefox"
+PROFILES_INI="$FIREFOX_DIR/profiles.ini"
+[ -f "$PROFILES_INI" ] || exit 0
+
+_install_profile() {
+    local path="$1" is_rel="$2"
+    [[ -z "$path" ]] && return
+    local full_path
+    [[ "$is_rel" == "1" ]] && full_path="$FIREFOX_DIR/$path" || full_path="$path"
+    [[ -d "$full_path" ]] || return
+    mkdir -p "$full_path/chrome"
+    cp "{{ .chezmoi.sourceDir }}/firefox/userChrome.css" "$full_path/chrome/userChrome.css"
+    local user_js="$full_path/user.js"
+    local pref='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
+    if grep -q "legacyUserProfileCustomizations" "$user_js" 2>/dev/null; then
+        sed -i '' "s|.*legacyUserProfileCustomizations.*|$pref|" "$user_js"
+    else
+        echo "$pref" >> "$user_js"
+    fi
+}
+
+is_relative="" profile_path=""
+while IFS= read -r line; do
+    if [[ "$line" =~ ^\[.*\]$ ]]; then
+        _install_profile "$profile_path" "$is_relative"
+        is_relative="" profile_path=""
+    elif [[ "$line" =~ ^IsRelative=(.+)$ ]]; then is_relative="${BASH_REMATCH[1]}"
+    elif [[ "$line" =~ ^Path=(.+)$ ]];       then profile_path="${BASH_REMATCH[1]}"
+    fi
+done < "$PROFILES_INI"
+_install_profile "$profile_path" "$is_relative"

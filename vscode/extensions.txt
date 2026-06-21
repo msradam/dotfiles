@@ -1,0 +1,25 @@
+# AI
+anthropic.claude-code
+
+# Python / Data Science
+ms-python.python
+ms-python.pylance
+charliermarsh.ruff
+ms-toolsai.jupyter
+ms-toolsai.datawrangler
+marimo-team.vscode-marimo
+
+# Documents / Typesetting
+myriad-dreamin.tinymist
+marp-team.marp-vscode
+tomoki1207.pdf
+
+# Web
+ritwickdey.LiveServer
+
+# Theme
+catppuccin.catppuccin-vsc
+catppuccin.catppuccin-vsc-icons
+
+# Writing
+streetsidesoftware.code-spell-checker

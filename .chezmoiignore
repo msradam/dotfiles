@@ -1,0 +1,10 @@
+# Reference files consumed by run scripts — not written to $HOME
+Brewfile
+README.md
+fonts
+firefox
+npm
+vscode
+
+# Local LazyVim settings (machine-generated, not committed)
+**/lazyvim.json

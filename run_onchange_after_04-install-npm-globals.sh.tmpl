@@ -1,0 +1,19 @@
+#!/bin/bash
+# {{ include "npm/globals.txt" | sha256sum }}
+set -euo pipefail
+
+if ! command -v npm &>/dev/null; then
+    echo "[skip] npm not on PATH — run fnm install --lts first"
+    exit 0
+fi
+
+installed="$(npm ls -g --depth=0 --parseable 2>/dev/null | xargs -n1 basename 2>/dev/null || true)"
+while IFS= read -r pkg; do
+    [[ "$pkg" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "${pkg// }" ]] && continue
+    pkg="${pkg%%#*}"; pkg="${pkg// /}"
+    [[ -z "$pkg" ]] && continue
+    echo "$installed" | grep -qx "$pkg" \
+        || npm install -g "$pkg" 2>&1 | tail -1 \
+        || true
+done < "{{ .chezmoi.sourceDir }}/npm/globals.txt"

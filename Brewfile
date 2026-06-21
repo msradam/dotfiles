@@ -5,6 +5,8 @@ tap "theboredteam/boring-notch"
 brew "openssl@3"
 # Magical shell history (SQLite-backed, fuzzy search, sync)
 brew "atuin"
+# Dotfile manager
+brew "chezmoi"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Modern TUI system monitor
@@ -232,8 +234,7 @@ cask "todoist-app"
 cask "skim"
 # Multimedia player
 cask "vlc"
-# High-performance, Rust-native code editor with built-in AI agent panel
-cask "zed"
+cask "visual-studio-code"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Utility to hide the notch by blacking out the menu bar

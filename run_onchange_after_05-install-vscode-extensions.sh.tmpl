@@ -1,0 +1,19 @@
+#!/bin/bash
+# {{ include "vscode/extensions.txt" | sha256sum }}
+set -euo pipefail
+
+if ! command -v code &>/dev/null; then
+    echo "[skip] code CLI not on PATH — open VS Code and run 'Shell Command: Install code in PATH'"
+    exit 0
+fi
+
+installed="$(code --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')"
+while IFS= read -r ext; do
+    [[ "$ext" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "${ext// }" ]] && continue
+    ext="${ext%%#*}"; ext="${ext// /}"
+    [[ -z "$ext" ]] && continue
+    echo "$installed" | grep -qx "${ext,,}" \
+        || code --install-extension "$ext" 2>&1 | tail -1 \
+        || true
+done < "{{ .chezmoi.sourceDir }}/vscode/extensions.txt"

@@ -1,2 +1,3 @@
 .DS_Store
 *.backup
+dot_config/nvim/lazyvim.json
