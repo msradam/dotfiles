@@ -13,7 +13,7 @@ while IFS= read -r ext; do
     [[ -z "${ext// }" ]] && continue
     ext="${ext%%#*}"; ext="${ext// /}"
     [[ -z "$ext" ]] && continue
-    echo "$installed" | grep -qx "${ext,,}" \
+    echo "$installed" | grep -qxi "$ext" \
         || code --install-extension "$ext" 2>&1 | tail -1 \
         || true
 done < "{{ .chezmoi.sourceDir }}/vscode/extensions.txt"
