@@ -38,7 +38,7 @@
   "search.followSymlinks": false,
   "search.useIgnoreFiles": true,
 
-  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.defaultInterpreterPath": "{{ env "HOME" }}/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
