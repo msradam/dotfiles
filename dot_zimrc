@@ -6,9 +6,5 @@ zmodule input
 zmodule utility
 # Tab completion — calls compinit with caching
 zmodule completion
-# Fish-like autosuggestions
-zmodule zsh-users/zsh-autosuggestions
 # Additional completion definitions
 zmodule zsh-users/zsh-completions --fpath src
-# Fish-like syntax highlighting — must be last
-zmodule zsh-users/zsh-syntax-highlighting

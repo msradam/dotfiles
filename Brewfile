@@ -1,7 +1,6 @@
 tap "auth0/auth0-cli"
 tap "FelixKratz/formulae"
 tap "koekeishiya/formulae"
-tap "theboredteam/boring-notch"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Magical shell history (SQLite-backed, fuzzy search, sync)
@@ -140,6 +139,10 @@ brew "yq"
 brew "yt-dlp"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Fish-like autosuggestions for zsh (sourced last in .zshrc)
+brew "zsh-autosuggestions"
+# Fish-like syntax highlighting for zsh (sourced last in .zshrc)
+brew "zsh-syntax-highlighting"
 # Build, manage and test your Auth0 integrations from the command line
 brew "auth0/auth0-cli/auth0"
 # A tiling window manager for macOS based on binary space partitioning.
@@ -156,8 +159,6 @@ cask "android-platform-tools"
 cask "audacity"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
-# Open-source Dynamic Island for the MacBook notch
-cask "theboredteam/boring-notch/boring-notch"
 # Git-friendly, offline-first API client (collections live in your repo)
 cask "bruno"
 # E-books management software
