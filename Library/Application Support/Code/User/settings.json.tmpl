@@ -1,26 +1,49 @@
 {
+  // ── Telemetry / noise off ───────────────────────────────────────
   "telemetry.telemetryLevel": "off",
   "workbench.enableExperiments": false,
+  "update.showReleaseNotes": false,
 
-  "editor.fontFamily": "'JetBrains Mono', monospace",
-  "editor.fontLigatures": true,
-  "editor.fontSize": 14,
-  "editor.lineHeight": 1.6,
-  "editor.minimap.enabled": false,
-  "editor.smoothScrolling": true,
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.formatOnSave": true,
-  "editor.renderWhitespace": "boundary",
-
-  "workbench.colorTheme": "Catppuccin Mocha",
+  // ── Theme (auto light/dark by macOS appearance) ─────────────────
+  // Mirrors the system-wide Catppuccin Latte/Mocha auto-switch used by
+  // Ghostty, the shell, and Neovim. autoDetectColorScheme follows the OS
+  // appearance; the two preferred* keys choose the variant per mode.
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredLightColorTheme": "Catppuccin Latte",
+  "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
   "workbench.startupEditor": "none",
   "workbench.tree.indent": 12,
+  "workbench.list.smoothScrolling": true,
+  "workbench.editor.enablePreview": false,
 
-  "terminal.integrated.fontFamily": "'JetBrains Mono Nerd Font', monospace",
-  "terminal.integrated.fontSize": 14,
-  "terminal.integrated.gpuAcceleration": "on",
+  // ── Fonts ───────────────────────────────────────────────────────
+  "editor.fontFamily": "'Input Mono', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": {{ .codeFontSize }},
+  "editor.lineHeight": 1.5,
 
+  // ── Editor behavior ─────────────────────────────────────────────
+  // Rulers at 88 (ruff/black line length) and 100 (hard ceiling).
+  "editor.rulers": [88, 100],
+  "editor.stickyScroll.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "solid",
+  "editor.linkedEditing": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  // format-on-save runs the language formatter below. If a Claude Code
+  // edit and the formatter ever fight over a file, set this to false and
+  // format via the toolchain / pre-commit instead.
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+
+  // ── Files ───────────────────────────────────────────────────────
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -38,11 +61,26 @@
   "search.followSymlinks": false,
   "search.useIgnoreFiles": true,
 
+  // ── Explorer quality-of-life ────────────────────────────────────
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  // ── Terminal ────────────────────────────────────────────────────
+  "terminal.integrated.fontFamily": "'Input Mono', 'Symbols Nerd Font Mono', monospace",
+  "terminal.integrated.fontSize": {{ .codeFontSize }},
+  "terminal.integrated.gpuAcceleration": "on",
+
+  // ── Python (uv-managed interpreter) ─────────────────────────────
   "python.defaultInterpreterPath": "{{ env "HOME" }}/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
 
+  // ── Git ─────────────────────────────────────────────────────────
   "git.autofetch": true,
-  "git.confirmSync": false
+  "git.confirmSync": false,
+
+  // ── Claude Code (VS Code extension) ─────────────────────────────
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.allowDangerouslySkipPermissions": true
 }

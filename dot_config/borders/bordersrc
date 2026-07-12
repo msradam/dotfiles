@@ -1,0 +1,10 @@
+#!/bin/bash
+# JankyBorders — Catppuccin Mocha. Run as a brew service; AeroSpace focuses windows.
+options=(
+	style=round
+	width=6.0
+	hidpi=on
+	active_color=0xffcba6f7   # mauve
+	inactive_color=0xff45475a # surface1
+)
+borders "${options[@]}"

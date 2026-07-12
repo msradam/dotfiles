@@ -1,4 +1,5 @@
 tap "auth0/auth0-cli"
+tap "FelixKratz/formulae"
 tap "koekeishiya/formulae"
 tap "theboredteam/boring-notch"
 # Cryptography and SSL/TLS Toolkit
@@ -15,8 +16,6 @@ brew "btop"
 brew "cmake"
 # In-process SQL OLAP database (analytics on Parquet/CSV/Arrow)
 brew "duckdb"
-# Container runtimes on MacOS (and Linux) with minimal setup
-brew "colima"
 # TIFF library and utilities
 brew "libtiff"
 # Pack, ship and run any application as a lightweight container
@@ -71,12 +70,8 @@ brew "jujutsu"
 brew "k6"
 # Simple terminal UI for git commands
 brew "lazygit"
-# Terminal file manager
-brew "lf"
 # Blazing fast terminal file manager written in Rust (async I/O)
 brew "yazi"
-# Hyperedited terminal workspace / multiplexer (layouts, floating panes)
-brew "zellij"
 # Hyperextensible Vim-based text editor (LazyVim distro config in nvim/)
 brew "neovim"
 # NetworKit is an OS-toolkit for large-scale network analysis
@@ -85,8 +80,6 @@ brew "libnetworkit"
 brew "libssh"
 # Generates assembly language code at run-time
 brew "lightning"
-# LLM inference in C/C++
-brew "llama.cpp"
 # Just-In-Time Compiler (JIT) for the Lua programming language
 brew "luajit"
 # Mac App Store command-line interface
@@ -101,8 +94,6 @@ brew "openjdk@17"
 brew "opus-tools"
 # Libosmium-based command-line tool for processing OpenStreetMap data
 brew "osmium-tool"
-# 7-Zip (high compression file archiver) implementation
-brew "p7zip"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
 # Single-file executable tool for creating, reading and uploading PMTiles archives
@@ -123,10 +114,6 @@ brew "sshpass"
 brew "starship"
 # Build vector tilesets from collections of GeoJSON features
 brew "tippecanoe"
-# Terminal multiplexer
-brew "tmux"
-# CLI for Todoist
-brew "todoist-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Markup-based typesetting system
@@ -157,8 +144,10 @@ brew "zoxide"
 brew "auth0/auth0-cli/auth0"
 # A tiling window manager for macOS based on binary space partitioning.
 brew "koekeishiya/formulae/yabai"
-# Enable Windows-like alt-tab
-cask "alt-tab"
+# Colored window borders for macOS (pairs with yabai; no SIP)
+brew "borders"
+# Windows-style window switcher (alt-tab + Dock thumbnail previews)
+cask "dockdoor"
 # Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
 # Android SDK component
@@ -175,8 +164,6 @@ cask "bruno"
 cask "calibre"
 # Anthropic's official Claude AI desktop app
 cask "claude"
-# Voice and text chat software
-cask "discord"
 # Web browser
 cask "firefox@developer-edition"
 cask "font-ark-pixel-12px-monospaced"
@@ -187,7 +174,9 @@ cask "font-comic-mono"
 cask "font-coral-pixels"
 cask "font-cozette"
 cask "font-fira-code-nerd-font"
+cask "font-geist"
 cask "font-geist-mono-nerd-font"
+cask "font-geist-pixel"
 cask "font-gohufont-nerd-font"
 cask "font-hack"
 cask "font-ibm-plex-mono"
@@ -198,6 +187,11 @@ cask "font-inter"
 cask "font-iosevka-nerd-font"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
+cask "font-maple-mono-nf"
+cask "font-mona-sans"
+cask "font-monaspace-nf"
+cask "font-input"
+cask "font-symbols-only-nerd-font"
 cask "font-monocraft"
 cask "font-pixel-code"
 cask "font-proggy-clean-tt-nerd-font"
@@ -212,8 +206,6 @@ cask "github"
 cask "google-chrome"
 # Command-line API client
 cask "ibm-cloud-cli"
-# Keyboard customiser
-cask "karabiner-elements"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
 # Music player
@@ -224,21 +216,9 @@ cask "obsidian"
 cask "qbittorrent"
 # Archive manager for data compression and backups
 cask "rar"
-# Team communication and collaboration software
-cask "slack"
-# CLI to create, run, and deploy Slack apps
-cask "slack-cli"
-# To-do list
-cask "todoist-app"
-# PDF reader that auto-reloads on disk change (Typst/LaTeX live preview)
-cask "skim"
 # Multimedia player
 cask "vlc"
 cask "visual-studio-code"
-# Native desktop client for WhatsApp
-cask "whatsapp"
-# Utility to hide the notch by blacking out the menu bar
-cask "topnotch"
 # Native Google Messages client for Mac (Tunabelly Software)
 mas "Texty for Google Messages", id: 1538996043
 go "golang.org/x/tools/cmd/deadcode"
@@ -252,7 +232,6 @@ go "honnef.co/go/tools/cmd/staticcheck"
 go "go.k6.io/xk6/cmd/xk6"
 uv "huggingface-hub"
 uv "llm"
-uv "podman-compose"
 uv "pyan3"
 uv "radon"
 uv "ruff"

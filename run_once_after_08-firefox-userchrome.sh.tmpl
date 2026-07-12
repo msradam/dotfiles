@@ -13,6 +13,7 @@ _install_profile() {
     [[ -d "$full_path" ]] || return
     mkdir -p "$full_path/chrome"
     cp "{{ .chezmoi.sourceDir }}/firefox/userChrome.css" "$full_path/chrome/userChrome.css" 2>/dev/null || true
+    cp "{{ .chezmoi.sourceDir }}/firefox/userContent.css" "$full_path/chrome/userContent.css" 2>/dev/null || true
     local user_js="$full_path/user.js"
     local pref='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
     if grep -q "legacyUserProfileCustomizations" "$user_js" 2>/dev/null; then

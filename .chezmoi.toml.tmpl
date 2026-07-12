@@ -1,0 +1,12 @@
+{{/* Source lives in ~/dotfiles (not the default ~/.local/share/chezmoi). */}}
+{{/* Per-machine code font size, tuned to ~18 arcmin cap height per device.
+     This Air ("Mac") drives its 13.6" panel + the LG 34" ultrawide → 20px compromise.
+     Work 16" MBP → 19px. Add more hosts as needed. */}}
+{{- $codeFontSize := 19 -}}
+{{- if eq .chezmoi.hostname "Mac" -}}
+{{-   $codeFontSize = 20 -}}
+{{- end -}}
+sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
+
+[data]
+    codeFontSize = {{ $codeFontSize }}

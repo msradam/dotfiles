@@ -1,6 +1,7 @@
 # Reference files consumed by run scripts — not written to $HOME
 Brewfile
 README.md
+bat
 fonts
 firefox
 npm

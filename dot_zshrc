@@ -54,7 +54,7 @@ _FZF_OPTS_COMMON="--border='rounded' --preview-window='border-rounded' \
 
 _palette_switch() {
     if defaults read -g AppleInterfaceStyle &>/dev/null; then
-        export STARSHIP_CONFIG="$HOME/.config/starship-mocha.toml"
+        export STARSHIP_CONFIG="$HOME/.config/starship-dark.toml"
         export BAT_THEME="Catppuccin Mocha"
         export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -62,9 +62,9 @@ _palette_switch() {
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
 $_FZF_OPTS_COMMON"
-        source "$HOME/.zsh/catppuccin-zsh-syntax-highlighting-mocha.zsh" 2>/dev/null
+        source "$HOME/.zsh/syntax-dark.zsh" 2>/dev/null
     else
-        export STARSHIP_CONFIG="$HOME/.config/starship-latte.toml"
+        export STARSHIP_CONFIG="$HOME/.config/starship-light.toml"
         export BAT_THEME="Catppuccin Latte"
         export FZF_DEFAULT_OPTS=" \
 --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
@@ -72,7 +72,7 @@ $_FZF_OPTS_COMMON"
 --color=marker:#7287fd,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
 --color=selected-bg:#bcc0cc \
 $_FZF_OPTS_COMMON"
-        source "$HOME/.zsh/catppuccin-zsh-syntax-highlighting-latte.zsh" 2>/dev/null
+        source "$HOME/.zsh/syntax-light.zsh" 2>/dev/null
     fi
 }
 autoload -U add-zsh-hook
@@ -106,12 +106,6 @@ alias py="python3"
 alias c="clear"
 alias vi="nvim"
 
-alias zj="zellij"
-
-# Colima (Docker backend) with 16GB-machine defaults
-alias dstart='colima start --memory 4 --cpu 2 --disk 30'
-alias dstop='colima stop'
-
 # Memory pressure + top consumers
 alias mem='memory_pressure && echo "---" && ps aux | sort -nrk 4 | head -10'
 
@@ -133,26 +127,13 @@ gstash() {
     git stash push -m "$msg"
 }
 
-# TUI IDE: editor + neo-tree + shell + Claude Code in one Zellij workspace.
-# `ide` opens the current dir; `ide <path>` or `ide <zoxide-query>` opens
-# there (all panes inherit the cwd). Run from a plain shell, not inside zellij.
-ide() {
-    local dir="${1:-.}"
-    if [ ! -d "$dir" ] && command -v zoxide >/dev/null; then
-        dir="$(zoxide query "$1" 2>/dev/null)" || { echo "ide: no match for '$1'" >&2; return 1; }
-    fi
-    builtin cd "$dir" || return 1
-    zellij --layout ide
-}
-
-# Typst live preview: compile + watch a .typ, open the PDF in Skim.
-# Skim auto-reloads on disk change (SKAutoReloadFileUpdate), so this
-# gives a real native PDF preview beside the editor. Ctrl-C to stop.
+# Typst live preview: compile + watch a .typ, open the PDF in Preview.
+# Preview refreshes the open document when the file changes. Ctrl-C to stop.
 tw() {
     local src="${1:?usage: tw file.typ}"
     local pdf="${src%.typ}.pdf"
     typst compile "$src" "$pdf" || return 1
-    open -a Skim "$pdf"
+    open -a Preview "$pdf"
     typst watch "$src" "$pdf"
 }
 
