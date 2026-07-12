@@ -1,6 +1,6 @@
 #!/bin/bash
 # {{ include "npm/globals.txt" | sha256sum }}
-set -euo pipefail
+set -uo pipefail
 
 if ! command -v npm &>/dev/null; then
     echo "[skip] npm not on PATH — run fnm install --lts first"

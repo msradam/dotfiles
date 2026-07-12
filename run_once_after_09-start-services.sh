@@ -1,4 +1,9 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
-yabai --restart-service 2>/dev/null || true
+if command -v yabai &>/dev/null; then
+    yabai --restart-service 2>/dev/null \
+        || echo "  ⚠️  yabai not started — grant Accessibility, then run: yabai --start-service"
+else
+    echo "  ⚠️  skipped: yabai not installed"
+fi

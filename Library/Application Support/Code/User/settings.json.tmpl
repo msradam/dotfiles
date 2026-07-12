@@ -1,3 +1,5 @@
+{{- $uvArch := "aarch64" -}}
+{{- if eq .chezmoi.arch "amd64" }}{{ $uvArch = "x86_64" }}{{ end -}}
 {
   // ── Telemetry / noise off ───────────────────────────────────────
   "telemetry.telemetryLevel": "off",
@@ -75,7 +77,7 @@
   "terminal.integrated.gpuAcceleration": "on",
 
   // ── Python (uv-managed interpreter) ─────────────────────────────
-  "python.defaultInterpreterPath": "{{ env "HOME" }}/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12",
+  "python.defaultInterpreterPath": "{{ env "HOME" }}/.local/share/uv/python/cpython-3.12-macos-{{ $uvArch }}-none/bin/python3.12",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },

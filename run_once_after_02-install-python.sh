@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 if command -v uv &>/dev/null; then
     uv python list 2>/dev/null | grep -q "3\.12" || \

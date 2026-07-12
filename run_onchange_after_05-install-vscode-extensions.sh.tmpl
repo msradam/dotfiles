@@ -1,6 +1,6 @@
 #!/bin/bash
 # {{ include "vscode/extensions.txt" | sha256sum }}
-set -euo pipefail
+set -uo pipefail
 
 if ! command -v code &>/dev/null; then
     echo "[skip] code CLI not on PATH — open VS Code and run 'Shell Command: Install code in PATH'"

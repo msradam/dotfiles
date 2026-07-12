@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 ZIM_HOME="$HOME/.zim"
 if [ ! -f "$ZIM_HOME/zimfw.zsh" ]; then

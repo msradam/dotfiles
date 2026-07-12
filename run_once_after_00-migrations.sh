@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 # Oh My Zsh → zimfw
 if [ -d "$HOME/.oh-my-zsh" ]; then
