@@ -90,6 +90,3 @@ tooltip,
 #searchbar .searchbar-textbox {
   color: var(--ctp-text) !important;
 }
-
-/* ── UI font: Input Sans (matches Obsidian; icons are images, unaffected) ── */
-* { font-family: "Input Sans" !important; }
